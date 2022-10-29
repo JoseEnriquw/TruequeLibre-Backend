@@ -1,10 +1,12 @@
 package com.grupo3.truequelibre.controllers;
 
-import java.util.List;
-import com.grupo3.truequelibre.entity.*;
-import com.grupo3.truequelibre.interfaces.IGenericServices;
+import com.grupo3.truequelibre.interfaces.IEstadoServices;
+import com.grupo3.truequelibre.services.EstadoService.CreateEstado;
+import com.grupo3.truequelibre.services.EstadoService.UpdateEstado;
+import com.grupo3.truequelibre.viewmodels.UpdateEstadoVM;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,23 +18,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path="/estado")
-public class EstadoController {
+public class EstadoController extends ControllerBase {
 
 	@Autowired
-	private IGenericServices<Estado,Integer> service;
+	private IEstadoServices service;
 	
 	@GetMapping()
-	public List<Estado> Get(){return service.getAll();}
+	public ResponseEntity Get(){return Result(service.getAll());}
 	
 	@GetMapping("/{id}")
-	public Estado Get(@PathVariable Integer id){return service.getById(id);}
+	public ResponseEntity Get(@PathVariable Integer id) {return Result( service.getById(id));}
 	
 	@PostMapping()
-	public void Create(@RequestBody Estado estado){service.save(estado);}
+	public ResponseEntity Create(@RequestBody CreateEstado estado){return Result(service.create(estado));}
 	
-	@PutMapping()
-	public void Update(@RequestBody Estado estado){service.save(estado);}
+	@PutMapping("/{id}")
+	public ResponseEntity Update(@PathVariable Integer id,@RequestBody UpdateEstadoVM estado){return Result( service.update(new UpdateEstado(id,estado.descripcion())));}
 	
 	@DeleteMapping("/{id}")
-	public void Delete(@PathVariable Integer id){service.delete(id);}
+	public ResponseEntity Delete(@PathVariable Integer id){return Result(service.delete(id));}
 }
