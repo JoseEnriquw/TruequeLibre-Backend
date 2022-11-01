@@ -58,21 +58,12 @@ public class Publicacion {
 	@JoinColumn(nullable=false)
 	private Estado estado; 
 	
-	@OneToMany(mappedBy = "publicacionOferante")
-	private Set<Oferta> ofertasEnviadas;
-	
-	@OneToMany(mappedBy = "publicacionPrincipal")
-	private Set<Oferta> ofertasRecibidas;
-	
 	public Publicacion() {}
 	
-	
-
-	public Publicacion(Integer id, Usuario usuario, String nombre, String descripcion, Categoria categoria,
+	public Publicacion( Usuario usuario, String nombre, String descripcion, Categoria categoria,
 			Categoria categoriaPretendida, byte[] imagenes, Condicion condicion, Localidad ubicacion,
 			Localidad ubicacionPretendida, Estado estado) {
-		super();
-		this.id = id;
+		
 		this.usuario = usuario;
 		this.nombre = nombre;
 		this.descripcion = descripcion;

@@ -21,6 +21,11 @@ public class Estado {
 		
 	}
 
+	public Estado(Integer id, String descripcion) {
+		this.id = id;
+		this.descripcion = descripcion;
+	}
+
 	public Estado(String descripcion) {
 		this.descripcion = descripcion;
 	}
