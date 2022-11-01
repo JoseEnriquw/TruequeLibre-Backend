@@ -36,7 +36,7 @@ public class EstadoController extends ControllerBase {
 	public ResponseEntity Create(@RequestBody CreateEstado estado){return Result(service.create(estado));}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity Update(@PathVariable Integer id,@RequestBody UpdateEstadoVM estado){return Result( service.update( new  UpdateEstado(id,estado.descripcion())));}
+	public ResponseEntity Update(@PathVariable Integer id,@RequestBody @Valid UpdateEstadoVM estado){return Result( service.update( new  UpdateEstado(id,estado.descripcion())));}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity Delete(@PathVariable Integer id){return Result(service.delete(id));}
