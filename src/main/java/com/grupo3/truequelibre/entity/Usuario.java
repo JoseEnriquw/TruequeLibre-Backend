@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -21,8 +22,9 @@ public class Usuario {
 	private String mail;
 	@Column(unique=true)
 	private String contrasenia;
-    @Column
-	private Boolean estado;
+	@ManyToOne (cascade= {CascadeType. ALL})
+	@JoinColumn(nullable=false)
+	private Estado estado;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dni", referencedColumnName = "dni")
 	private Persona persona;
@@ -30,7 +32,7 @@ public class Usuario {
 	public Usuario() {
 	}
 
-	public Usuario(Integer id, String mail, String contrasenia, Boolean estado, Persona persona) {
+	public Usuario(Integer id, String mail, String contrasenia, Estado estado, Persona persona) {
 		this.id = id;
 		this.mail = mail;
 		this.contrasenia = contrasenia;
@@ -62,11 +64,11 @@ public class Usuario {
 		this.contrasenia = contrasenia;
 	}
 
-	public Boolean getEstado() {
+	public Estado getEstado() {
 		return estado;
 	}
 
-	public void setEstado(Boolean estado) {
+	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
 
