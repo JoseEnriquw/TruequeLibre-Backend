@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="estado")
-public class Estado {
+@Table(name="categoria")
+public class Categoria {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY) 
@@ -17,11 +17,11 @@ public class Estado {
 	@Column
 	private String descripcion;
 	
-	public Estado() {
+	public Categoria() {
 		
 	}
 
-	public Estado(String descripcion) {
+	public Categoria(String descripcion) {
 		this.descripcion = descripcion;
 	}
 
@@ -40,4 +40,8 @@ public class Estado {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	
+	
+	
 }
+

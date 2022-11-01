@@ -3,9 +3,8 @@ package com.grupo3.truequelibre.exceptions;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,6 +16,7 @@ import org.springframework.web.context.request.WebRequest;
 import com.grupo3.truequelibre.tools.Error;
 
 @ControllerAdvice
+
 public class AppExceptionsHandler{
 	
 	@ExceptionHandler(value = {ConstraintViolationException.class})
@@ -48,6 +48,5 @@ public class AppExceptionsHandler{
 	     return new ResponseEntity<>(
 	            ex, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 	 }
-
 	
 }
