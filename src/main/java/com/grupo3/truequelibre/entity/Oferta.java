@@ -17,10 +17,10 @@ public class Oferta {
 	
 	@Column
 	@GeneratedValue(strategy=GenerationType.IDENTITY) 
-	private Integer idOferta;
+	private Integer id;
 	
 	@EmbeddedId
-	private PublicacionesOfertasID id;
+	private PublicacionesOfertasID idPublicacionesOfertas;
 	
 	@ManyToOne
 	@MapsId("idPublicacionPrincipal")
@@ -39,8 +39,8 @@ public class Oferta {
 	public Oferta(Integer idOferta, PublicacionesOfertasID id, Publicacion publicacionPrincipal,
 			Publicacion publicacionOferante, Estado estado) {
 		super();
-		this.idOferta = idOferta;
-		this.id = id;
+		this.id = idOferta;
+		this.idPublicacionesOfertas = id;
 		this.publicacionPrincipal = publicacionPrincipal;
 		this.publicacionOferante = publicacionOferante;
 		this.estado = estado;
@@ -48,20 +48,20 @@ public class Oferta {
 	
 	public Oferta() {}
 
-	public Integer getIdOferta() {
-		return idOferta;
-	}
-
-	public void setIdOferta(Integer idOferta) {
-		this.idOferta = idOferta;
-	}
-
-	public PublicacionesOfertasID getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(PublicacionesOfertasID id) {
+	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public PublicacionesOfertasID getIdPublicacionesOfertas() {
+		return idPublicacionesOfertas;
+	}
+
+	public void setIdPublicacionesOfertas(PublicacionesOfertasID idPublicacionesOfertas) {
+		this.idPublicacionesOfertas = idPublicacionesOfertas;
 	}
 
 	public Publicacion getPublicacionPrincipal() {
