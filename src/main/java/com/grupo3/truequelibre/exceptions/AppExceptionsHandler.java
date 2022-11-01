@@ -46,7 +46,7 @@ public class AppExceptionsHandler{
 	 public ResponseEntity<?> handleAnyException(Exception ex, WebRequest request) {
 		 
 	     return new ResponseEntity<>(
-	            ex, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+	            ex, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 	 }
 	
 }
