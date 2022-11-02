@@ -21,14 +21,12 @@ public class Estado {
 		
 	}
 
-	public Estado(Integer id, String descripcion) {
-		super();
+	public Estado(Integer id, String descripcion) {		
 		this.id = id;
 		this.descripcion = descripcion;
 	}
 	
 	public Estado(Integer id) {
-		super();
 		this.id = id;
 	}
 
