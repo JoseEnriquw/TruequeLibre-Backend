@@ -1,11 +1,9 @@
 package com.grupo3.truequelibre.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -15,8 +13,7 @@ import javax.persistence.Table;
 @Table(name="oferta")
 public class Oferta {
 	
-	@Column
-	@GeneratedValue(strategy=GenerationType.IDENTITY) 
+	@Column(columnDefinition = "INT NOT NULL UNIQUE KEY auto_increment")
 	private Integer id;
 	
 	@EmbeddedId
@@ -32,7 +29,7 @@ public class Oferta {
 	@JoinColumn(name = "id_publicacion_oferante")
 	private Publicacion publicacionOferante;
 	
-	@ManyToOne (cascade= {CascadeType. ALL})
+	@ManyToOne (fetch = FetchType.LAZY)
 	@JoinColumn(nullable=false)
 	private Estado estado;
 
@@ -46,6 +43,16 @@ public class Oferta {
 		this.estado = estado;
 	}
 	
+	
+	
+	public Oferta(PublicacionesOfertasID idPublicacionesOfertas, Estado estado) {
+		super();
+		this.idPublicacionesOfertas = idPublicacionesOfertas;
+		this.estado = estado;
+	}
+
+
+
 	public Oferta() {}
 
 	public Integer getId() {
