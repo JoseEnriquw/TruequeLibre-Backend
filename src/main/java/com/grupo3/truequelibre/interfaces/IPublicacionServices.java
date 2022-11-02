@@ -12,5 +12,6 @@ public interface IPublicacionServices {
 	Response<Publicacion> getById(Integer id);
 	Response create(@Valid CreatePublicacionRequest request);
 	Response update(@Valid UpdatePublicacionRequest request);
+	Response delete(Integer id);
 	
 }
