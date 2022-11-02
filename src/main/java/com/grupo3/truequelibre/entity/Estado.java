@@ -21,6 +21,17 @@ public class Estado {
 		
 	}
 
+	public Estado(Integer id, String descripcion) {
+		super();
+		this.id = id;
+		this.descripcion = descripcion;
+	}
+	
+	public Estado(Integer id) {
+		super();
+		this.id = id;
+	}
+
 	public Estado(String descripcion) {
 		this.descripcion = descripcion;
 	}

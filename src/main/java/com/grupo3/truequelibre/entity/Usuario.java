@@ -31,6 +31,15 @@ public class Usuario {
 
 	public Usuario() {
 	}
+	
+	
+
+	public Usuario(Integer id) {
+		super();
+		this.id = id;
+	}
+
+
 
 	public Usuario(Integer id, String mail, String contrasenia, Estado estado, Persona persona) {
 		this.id = id;
