@@ -37,7 +37,7 @@ public class UsuarioServices implements IUsuarioServices{
 	
 	@Override
 	public Response<List<Usuario>> getAll() {
-		return new Response<List<Usuario>>(usuarioDao.findByEstadoIdNot(2),HttpStatus.OK);
+		return new Response<List<Usuario>>(usuarioDao.findByEstadoIdNot(Estados.Inactivo.ordinal()+1),HttpStatus.OK);
 	}
 	
 	@Override
@@ -75,6 +75,57 @@ public class UsuarioServices implements IUsuarioServices{
 		
 		
 		
+		return response;
+	}
+
+	@Override
+	public Response<Usuario> update(@Valid UpdateUsuarioRequest request) {
+		Response<Usuario> response = new Response<>();
+		Optional<Usuario> entity = usuarioDao.findByMailAndEstadoIdNot(request.mail(),Estados.Inactivo.ordinal()+1);
+		if(entity.isEmpty()) {
+			response.AddError("#1", "email","The Email " + request.mail() + " of usuario was not found in the database");
+			response.setStatus(HttpStatus.NOT_FOUND);
+		}
+		else {
+			Optional<Localidad> ubicacion =localidadDao.findById(request.localidad());
+			if(ubicacion.isEmpty()) {
+				response.AddError("#1", "id Localidad", String.format(ErrorMessage.NOTFOUND,request.localidad(),"Localidad"));		  
+				response.setStatus(HttpStatus.NOT_FOUND);
+			}
+			else {
+				Usuario usuario = entity.get();
+				usuario.getPersona().setNombre(request.nombre());
+				usuario.getPersona().setApellido(request.apellido());
+				usuario.getPersona().setDireccion(request.direccion());
+				usuario.getPersona().setFechaNacimiento(request.fechaNacimiento());
+				usuario.getPersona().setLocalidad(ubicacion.get());
+				usuario.getPersona().setTelefono(request.telefono());
+				usuario.setContrasenia(request.contrasenia());
+				usuario = usuarioDao.save(usuario);
+				response.setBody(usuario);
+				response.setStatus(HttpStatus.OK);
+			}			
+		}
+		
+		return response;
+		
+	}
+
+	@Override
+	public Response delete(String email) {
+		Response<Usuario> response = new Response<>();
+		Optional<Usuario> entity = usuarioDao.findByMailAndEstadoIdNot(email,Estados.Inactivo.ordinal()+1);
+		if(entity.isEmpty()) {
+			response.AddError("#1", "email","The Email " + email + " of usuario was not found in the database");
+			response.setStatus(HttpStatus.NOT_FOUND);
+		}
+		else {
+			Usuario usuario = entity.get();
+			usuario.setEstado(new Estado(Estados.Inactivo.ordinal()+1));
+			usuarioDao.save(usuario);
+			response.setBody(usuario);
+			response.setStatus(HttpStatus.OK);
+		}
 		return response;
 	}
 
