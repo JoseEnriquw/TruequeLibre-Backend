@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grupo3.truequelibre.interfaces.IOfertaServices;
 
 import com.grupo3.truequelibre.services.OfertaService.CreateOfertaRequest;
-import com.grupo3.truequelibre.services.OfertaService.FiltrarOfertaRequest;
 import com.grupo3.truequelibre.services.OfertaService.UpdateOfertaRequest;
 import com.grupo3.truequelibre.viewmodels.UpdateOfertaVM;
 

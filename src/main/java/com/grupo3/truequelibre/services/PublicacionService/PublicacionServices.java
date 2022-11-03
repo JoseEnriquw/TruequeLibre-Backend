@@ -2,14 +2,10 @@ package com.grupo3.truequelibre.services.PublicacionService;
 
 import java.util.List;
 import java.util.Optional;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
 import com.grupo3.truequelibre.dao.ICategoriaDao;
 import com.grupo3.truequelibre.dao.ICondicionDao;
 import com.grupo3.truequelibre.dao.IEstadoDao;
@@ -47,7 +43,7 @@ public class PublicacionServices implements IPublicacionServices {
 
 	@Override
 	public Response<List<Publicacion>> getAll() {
-		return new Response<List<Publicacion>>( (List<Publicacion>)publicacionDao.findAll(),HttpStatus.OK);
+		return new Response<List<Publicacion>>( (List<Publicacion>)publicacionDao.findByEstadoIdNot(2),HttpStatus.OK);
 	}
 
 	@Override
@@ -203,5 +199,21 @@ public class PublicacionServices implements IPublicacionServices {
 		return response;
 	}
 
+	public Response delete(Integer id) {
+		Optional<Publicacion>entity=publicacionDao.findById(id);
+		 Response<Publicacion> response= new Response<>();
+		if(entity.isEmpty()) {
+			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,id,"Oferta"));		  
+			response.setStatus(HttpStatus.NOT_FOUND);
+		}else {
+		   Optional<Estado> estado= estadoDao.findById(Estados.Inactivo.ordinal()+1); 
+           Publicacion publicacion= entity.get();
+           publicacion.setEstado(estado.get());
+           
+           publicacionDao.save(publicacion);
+           response.setStatus(HttpStatus.OK);
+		}
+		return response;	
+		}
 	
 }
