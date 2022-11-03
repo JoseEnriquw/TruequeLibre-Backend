@@ -48,6 +48,19 @@ public class Persona {
 		this.localidad = localidad;
 		this.usuario=usuario;
 	}
+	
+	public Persona(String dni, String nombre, String apellido, String direccion, Date fechaNacimiento, String telefono,
+			Localidad localidad) {
+		this.dni = dni;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.direccion = direccion;
+		this.fechaNacimiento = fechaNacimiento;
+		this.telefono = telefono;
+		this.localidad = localidad;
+		
+	}
+
 
 	public String getId() {
 		return dni;
