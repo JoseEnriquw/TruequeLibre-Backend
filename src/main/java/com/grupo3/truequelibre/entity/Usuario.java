@@ -48,6 +48,14 @@ public class Usuario {
 		this.estado = estado;
 		this.persona = persona;
 	}
+	
+	public Usuario(String mail, String contrasenia, Estado estado, Persona persona) {
+		
+		this.mail = mail;
+		this.contrasenia = contrasenia;
+		this.estado = estado;
+		this.persona = persona;
+	}
 
 	public Integer getId() {
 		return id;

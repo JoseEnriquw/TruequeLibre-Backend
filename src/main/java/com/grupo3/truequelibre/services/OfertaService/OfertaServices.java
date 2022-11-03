@@ -114,6 +114,28 @@ public class OfertaServices implements IOfertaServices {
 		}
 		return response;
 	}
+	
+
+	@Override
+	public Response<List<Oferta>> filtrar(@Valid FiltrarOfertaRequest request) {
+		Optional<List<Oferta>>listOfertas=null;
+		switch(request.id_estado()) {
+			case 3:listOfertas=ofertaDao.findByEstadoAndPublicacionOferante_Usuario(new Estado(request.id_estado()),new Usuario(request.id_usuario()));
+			break;
+//			case 4:listOfertas=ofertaDao.findAll(request.id_estado());
+//			break;
+		}
+		Response<List<Oferta>> response= new Response<>();
+		if (listOfertas == null || listOfertas.isEmpty()) {
+			response.AddError("#1", "","No ofertas were found with this filters");		  
+			response.setStatus(HttpStatus.NOT_FOUND);
+		}
+		else {
+			response.setBody(listOfertas.get());
+			response.setStatus(HttpStatus.OK);
+		}
+		return response;
+	}
 
 	
 

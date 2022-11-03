@@ -40,4 +40,7 @@ public class OfertaController extends ControllerBase {
 	@DeleteMapping("/{id}")
 	public ResponseEntity Delete(@PathVariable Integer id){return Result(service.delete(id));}
 	
+	@PostMapping("/filtrar")
+	public ResponseEntity Filtrar(@RequestBody FiltrarOfertaRequest filtros) {return Result(service.filtrar(filtros));}
+	
 }
