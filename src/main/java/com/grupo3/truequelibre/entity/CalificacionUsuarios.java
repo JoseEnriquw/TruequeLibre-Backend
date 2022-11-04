@@ -31,6 +31,10 @@ public class CalificacionUsuarios {
 	@JoinColumn
 	private Usuario usuario;
 	
+	@ManyToOne (cascade= {CascadeType. ALL})
+	@JoinColumn
+	private Usuario usuarioCalificador;
+	
 	public CalificacionUsuarios() {
 	}
 
@@ -40,6 +44,14 @@ public class CalificacionUsuarios {
 		this.comentario = comentario;
 		this.fecha = fecha;
 		this.usuario = usuario;
+	}
+	
+	public CalificacionUsuarios(short estrellas, String comentario, Date fecha, Usuario usuario, Usuario usuarioCalificador) {
+		this.estrellas = estrellas;
+		this.comentario = comentario;
+		this.fecha = fecha;
+		this.usuario = usuario;
+		this.usuarioCalificador = usuarioCalificador;
 	}
 
 	public Integer getId() {
@@ -81,4 +93,12 @@ public class CalificacionUsuarios {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}	
+	
+	public Usuario getUsuarioCalificador() {
+		return usuarioCalificador;
+	}
+
+	public void setUsuarioCalificador(Usuario usuarioCalificador) {
+		this.usuarioCalificador = usuarioCalificador;
+	}
 }
