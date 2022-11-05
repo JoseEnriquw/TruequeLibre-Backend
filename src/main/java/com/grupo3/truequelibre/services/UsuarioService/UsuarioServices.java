@@ -112,7 +112,7 @@ public class UsuarioServices implements IUsuarioServices{
 	}
 
 	@Override
-	public Response delete(String email) {
+	public Response<?> delete(String email) {
 		Response<Usuario> response = new Response<>();
 		Optional<Usuario> entity = usuarioDao.findByMailAndEstadoIdNot(email,Estados.Inactivo.ordinal()+1);
 		if(entity.isEmpty()) {
@@ -121,7 +121,8 @@ public class UsuarioServices implements IUsuarioServices{
 		}
 		else {
 			Usuario usuario = entity.get();
-			usuario.setEstado(new Estado(Estados.Inactivo.ordinal()+1));
+			Optional<Estado> estado= estadoDao.findById(Estados.Inactivo.ordinal()+1); 
+			usuario.setEstado(estado.get());
 			usuarioDao.save(usuario);
 			response.setBody(usuario);
 			response.setStatus(HttpStatus.OK);

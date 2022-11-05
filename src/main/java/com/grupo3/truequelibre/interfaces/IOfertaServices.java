@@ -14,9 +14,9 @@ public interface IOfertaServices {
 
 	Response<List<Oferta>> getAll();
 	Response<Oferta> getById(Integer id);
-	Response create(@Valid CreateOfertaRequest request);
-	Response update(@Valid UpdateOfertaRequest request);
-	Response delete(Integer id);
+	Response<?> create(@Valid CreateOfertaRequest request);
+	Response<?> update(@Valid UpdateOfertaRequest request);
+	Response<?> delete(Integer id);
 	Response<List<Oferta>> filtrar(@Valid FiltrarOfertaRequest request);
 
 }

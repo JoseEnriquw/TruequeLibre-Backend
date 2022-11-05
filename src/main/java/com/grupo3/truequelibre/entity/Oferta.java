@@ -1,9 +1,9 @@
 package com.grupo3.truequelibre.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -29,8 +29,9 @@ public class Oferta {
 	@JoinColumn(name = "id_publicacion_oferante")
 	private Publicacion publicacionOferante;
 	
-	@ManyToOne (fetch = FetchType.LAZY)
+	@ManyToOne (cascade = CascadeType.ALL)
 	@JoinColumn(nullable=false)
+	
 	private Estado estado;
 
 	public Oferta(Integer idOferta, PublicacionesOfertasID id, Publicacion publicacionPrincipal,

@@ -3,7 +3,7 @@ package com.grupo3.truequelibre.exceptions;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.ConstraintViolation;
+
 import javax.validation.ConstraintViolationException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
