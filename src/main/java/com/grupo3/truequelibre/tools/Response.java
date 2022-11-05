@@ -82,7 +82,7 @@ public class Response <T> {
 	}
 
 	public boolean IsValid() {
-		return !errors.isEmpty();
+		return errors.isEmpty();
 	}
 	
 	public void AddHeaders(MultiValueMap<String, String> headers) 
