@@ -23,18 +23,18 @@ public class UsuarioController extends ControllerBase{
 	IUsuarioServices service;
 	
 	@GetMapping
-	public ResponseEntity Get(){return Result(service.getAll());}
+	public ResponseEntity<?> Get(){return Result(service.getAll());}
 	
 	@GetMapping("/{email}")
-	public ResponseEntity GetByEmail(@PathVariable String email){return Result(service.getByEmail(email));}
+	public ResponseEntity<?> GetByEmail(@PathVariable String email){return Result(service.getByEmail(email));}
 	
 	@PostMapping()
-	public ResponseEntity Create(@RequestBody CreateUsuarioRequest usuario) {return Result(service.create(usuario));}
+	public ResponseEntity<?> Create(@RequestBody CreateUsuarioRequest usuario) {return Result(service.create(usuario));}
 	
 	@PutMapping("/{email}")
-	public ResponseEntity Update(@PathVariable String email,@RequestBody UpdateUsuarioVM usuario) {return Result(service.update(new UpdateUsuarioRequest(email,usuario.nombre(),usuario.apellido(),usuario.direccion(),usuario.telefono(),usuario.localidad(),usuario.fechaNacimiento(),usuario.contrasenia())));}
+	public ResponseEntity<?> Update(@PathVariable String email,@RequestBody UpdateUsuarioVM usuario) {return Result(service.update(new UpdateUsuarioRequest(email,usuario.nombre(),usuario.apellido(),usuario.direccion(),usuario.telefono(),usuario.localidad(),usuario.fechaNacimiento(),usuario.contrasenia())));}
 	
 	@DeleteMapping("/{email}")
-	public ResponseEntity Delete(@PathVariable String email) { return Result(service.delete(email));};
+	public ResponseEntity<?> Delete(@PathVariable String email) { return Result(service.delete(email));};
 		
 }

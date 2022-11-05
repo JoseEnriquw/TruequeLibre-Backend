@@ -26,21 +26,22 @@ public class OfertaController extends ControllerBase {
 	IOfertaServices service;
 	
 	@GetMapping
-	public ResponseEntity Get(){return Result(service.getAll());}
+	public ResponseEntity<?> Get(){return Result(service.getAll());}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity Get(@PathVariable Integer id) {return Result( service.getById(id));}
+	public ResponseEntity<?> Get(@PathVariable Integer id) {return Result( service.getById(id));}
 	
 	@PostMapping()
-	public ResponseEntity Create(@RequestBody CreateOfertaRequest oferta){return Result(service.create(oferta));}
+	public ResponseEntity<?> Create(@RequestBody CreateOfertaRequest oferta){return Result(service.create(oferta));}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity Update(@PathVariable Integer id,@RequestBody UpdateOfertaVM oferta){return Result(service.update(new UpdateOfertaRequest(id,oferta.id_estado())));}
+	public ResponseEntity<?> Update(@PathVariable Integer id,@RequestBody UpdateOfertaVM oferta){return Result(service.update(new UpdateOfertaRequest(id,oferta.id_estado())));}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity Delete(@PathVariable Integer id){return Result(service.delete(id));}
+	public ResponseEntity<?> Delete(@PathVariable Integer id){return Result(service.delete(id));}
 	
 	@PostMapping("/filtrar")
-	public ResponseEntity Filtrar(@RequestBody FiltrarOfertaRequest filtros) {return Result(service.filtrar(filtros));}
+	public ResponseEntity<?> Filtrar(@RequestBody FiltrarOfertaRequest filtros) {return Result(service.filtrar(filtros));}
+	
 	
 }

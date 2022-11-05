@@ -43,7 +43,7 @@ public class PublicacionServices implements IPublicacionServices {
 
 	@Override
 	public Response<List<Publicacion>> getAll() {
-		return new Response<List<Publicacion>>( (List<Publicacion>)publicacionDao.findByEstadoIdNot(2),HttpStatus.OK);
+		return new Response<List<Publicacion>>( (List<Publicacion>)publicacionDao.findByEstadoIdNot(Estados.Inactivo.ordinal()+1),HttpStatus.OK);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class PublicacionServices implements IPublicacionServices {
 	}
 
 	@Override
-	public Response create( CreatePublicacionRequest request) {
+	public Response<?> create( CreatePublicacionRequest request) {
 		 Response<?> response= new Response<>();	
 		 
 		 ////Valida id USUARIO
@@ -123,7 +123,7 @@ public class PublicacionServices implements IPublicacionServices {
 	}
 
 	@Override
-	public Response update(UpdatePublicacionRequest request) {
+	public Response<?> update(UpdatePublicacionRequest request) {
  
         Response<?> response= new Response<>();	
 		 
@@ -199,7 +199,7 @@ public class PublicacionServices implements IPublicacionServices {
 		return response;
 	}
 
-	public Response delete(Integer id) {
+	public Response<?> delete(Integer id) {
 		Optional<Publicacion>entity=publicacionDao.findById(id);
 		 Response<Publicacion> response= new Response<>();
 		if(entity.isEmpty()) {
