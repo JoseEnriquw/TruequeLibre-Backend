@@ -234,5 +234,20 @@ public class PublicacionServices implements IPublicacionServices {
 		}
 		return response;
 	}
+
+	@Override
+	public Response<List<Publicacion>> getAllByCategoriaFilter(@Valid GetAllByCategoriaFilterRequest request) {
+		Optional<Categoria> categoria =categoriaDao.findById(request.categoria());
+		 Response<List<Publicacion>> response= new Response<>();
+		if(categoria.isEmpty()) {
+			response.AddError("#1", "idCategoria", String.format(ErrorMessage.NOTFOUND,request.categoria(),"Oferta"));		  
+			response.setStatus(HttpStatus.NOT_FOUND);
+		}else {
+			List<Publicacion> result= publicacionDao.findByCategoriaIdNombreIncompleto(request.categoria(),request.search());
+			response.setBody(result);
+			response.setStatus(HttpStatus.OK);
+		}
+		return response;
+	}
 	
 }
