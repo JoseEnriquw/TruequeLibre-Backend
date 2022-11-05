@@ -10,7 +10,7 @@ public class ControllerBase {
 
 	public ResponseEntity Result(Response response)
 	{
-		if(response.IsValid())
+		if(!response.IsValid())
 		{
 		   	return RequestError(response);
 		}

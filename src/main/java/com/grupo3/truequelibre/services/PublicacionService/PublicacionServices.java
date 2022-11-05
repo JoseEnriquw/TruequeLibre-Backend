@@ -2,6 +2,9 @@ package com.grupo3.truequelibre.services.PublicacionService;
 
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -47,11 +50,11 @@ public class PublicacionServices implements IPublicacionServices {
 	}
 
 	@Override
-	public Response<Publicacion> getById(Integer id) {
-		Optional<Publicacion>entity=publicacionDao.findById(id);
+	public Response<Publicacion> getById(GetByIdRequest request) {
+		Optional<Publicacion>entity=publicacionDao.findById(request.id());
 		 Response<Publicacion> response= new Response<>();
 		if(entity.isEmpty()) {
-			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,id,"Oferta"));		  
+			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,request.id(),"Publicacion"));		  
 			response.setStatus(HttpStatus.NOT_FOUND);
 		}else {
 		   response.setBody(entity.get());
@@ -199,11 +202,12 @@ public class PublicacionServices implements IPublicacionServices {
 		return response;
 	}
 
-	public Response<?> delete(Integer id) {
-		Optional<Publicacion>entity=publicacionDao.findById(id);
+	@Override
+	public Response<?> delete(@Valid GetByIdRequest request) {
+		Optional<Publicacion>entity=publicacionDao.findById(request.id());
 		 Response<Publicacion> response= new Response<>();
 		if(entity.isEmpty()) {
-			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,id,"Oferta"));		  
+			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,request.id(),"Publicacion"));		  
 			response.setStatus(HttpStatus.NOT_FOUND);
 		}else {
 		   Optional<Estado> estado= estadoDao.findById(Estados.Inactivo.ordinal()+1); 
@@ -215,5 +219,20 @@ public class PublicacionServices implements IPublicacionServices {
 		}
 		return response;	
 		}
+
+	@Override
+	public Response<List<Publicacion>> getAllByCategoria(GetAllByCategoriaRequest request) {
+		Optional<Categoria> categoria =categoriaDao.findById(request.categoria());
+		 Response<List<Publicacion>> response= new Response<>();
+		if(categoria.isEmpty()) {
+			response.AddError("#1", "idCategoria", String.format(ErrorMessage.NOTFOUND,request.categoria(),"Oferta"));		  
+			response.setStatus(HttpStatus.NOT_FOUND);
+		}else {
+			List<Publicacion> result= publicacionDao.findByCategoriaId(request.categoria());
+			response.setBody(result);
+			response.setStatus(HttpStatus.OK);
+		}
+		return response;
+	}
 	
 }

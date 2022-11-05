@@ -8,4 +8,5 @@ import com.grupo3.truequelibre.entity.Publicacion;
 public interface IPublicacionDao extends JpaRepository<Publicacion,Integer>{
 
 	List<Publicacion> findByEstadoIdNot(Integer estado);
+	List<Publicacion> findByCategoriaId(Integer categoria);
 }
