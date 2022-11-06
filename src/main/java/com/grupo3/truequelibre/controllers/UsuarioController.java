@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.grupo3.truequelibre.interfaces.IUsuarioServices;
 import com.grupo3.truequelibre.services.UsuarioService.CreateUsuarioRequest;
+import com.grupo3.truequelibre.services.UsuarioService.LoginUsuarioRequest;
+import com.grupo3.truequelibre.services.UsuarioService.RecuperarUsuarioRequest;
+import com.grupo3.truequelibre.services.UsuarioService.RecuperarVerificarUsuarioRequest;
 import com.grupo3.truequelibre.services.UsuarioService.UpdateUsuarioRequest;
 import com.grupo3.truequelibre.viewmodels.UpdateUsuarioVM;
 
@@ -36,5 +39,14 @@ public class UsuarioController extends ControllerBase{
 	
 	@DeleteMapping("/{email}")
 	public ResponseEntity<?> Delete(@PathVariable String email) { return Result(service.delete(email));};
+	
+	@PostMapping("/login")
+	public ResponseEntity<?> Login(@RequestBody LoginUsuarioRequest request){return Result(service.login(request)); };
+	
+	@GetMapping("/recuperar/{email}")
+	public ResponseEntity<?> Recuperar(@PathVariable String email){return Result(service.recuperar(new RecuperarUsuarioRequest(email))); };
+	
+	@PostMapping("/recuperar")
+	public ResponseEntity<?> VerificarRecuperar(@RequestBody RecuperarVerificarUsuarioRequest request){return Result(service.recuperarVerificar(request)); };
 		
 }
