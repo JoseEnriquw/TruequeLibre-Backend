@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +17,9 @@ public class Categoria {
 	private Integer id;
 	@Column
 	private String descripcion;
+	@Lob
+	@Column
+	private byte[] imagen;
 	
 	public Categoria() {
 		
@@ -23,6 +27,11 @@ public class Categoria {
 
 	public Categoria(String descripcion) {
 		this.descripcion = descripcion;
+	}
+	
+	public Categoria(String descripcion, byte[] imagen) {
+		this.descripcion = descripcion;
+		this.imagen = imagen;
 	}
 
 	public Integer getId() {
@@ -40,6 +49,15 @@ public class Categoria {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+
+	public byte[] getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
+	}
+	
 	
 	
 	
