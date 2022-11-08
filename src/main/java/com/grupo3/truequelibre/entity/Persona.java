@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -31,12 +32,17 @@ public class Persona {
 	private Localidad localidad;
     @OneToOne(mappedBy = "persona")
     private Usuario usuario;
+	@Lob
+	@Column
+	private byte[] imagenes;
 
 	public Persona() {
 	}
 
+	
+	
 	public Persona(String dni, String nombre, String apellido, String direccion, Date fechaNacimiento, String telefono,
-			Localidad localidad,Usuario usuario) {
+			Localidad localidad, byte[] imagenes) {
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -44,9 +50,9 @@ public class Persona {
 		this.fechaNacimiento = fechaNacimiento;
 		this.telefono = telefono;
 		this.localidad = localidad;
-		this.usuario=usuario;
+		this.imagenes = imagenes;
 	}
-	
+
 	public Persona(String dni, String nombre, String apellido, String direccion, Date fechaNacimiento, String telefono,
 			Localidad localidad) {
 		this.dni = dni;
@@ -57,15 +63,6 @@ public class Persona {
 		this.telefono = telefono;
 		this.localidad = localidad;
 		
-	}
-
-
-	public String getId() {
-		return dni;
-	}
-
-	public void setId(String dni) {
-		this.dni = dni;
 	}
 
 	public String getNombre() {
@@ -115,4 +112,30 @@ public class Persona {
 	public void setLocalidad(Localidad localidad) {
 		this.localidad = localidad;
 	}
+
+
+
+	public String getDni() {
+		return dni;
+	}
+
+
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+
+
+	public byte[] getImagenes() {
+		return imagenes;
+	}
+
+
+
+	public void setImagenes(byte[] imagenes) {
+		this.imagenes = imagenes;
+	}
+	
+	
 }

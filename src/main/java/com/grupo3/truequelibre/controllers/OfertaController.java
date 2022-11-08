@@ -19,7 +19,7 @@ import com.grupo3.truequelibre.services.OfertaService.UpdateOfertaRequest;
 import com.grupo3.truequelibre.viewmodels.UpdateOfertaVM;
 
 @RestController
-@RequestMapping(path="/oferta")
+@RequestMapping(path="api/v1/oferta")
 public class OfertaController extends ControllerBase {
 
 	@Autowired

@@ -20,24 +20,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path="/estado")
+@RequestMapping(path="api/v1/estado")
 public class EstadoController extends ControllerBase {
 
 	@Autowired
 	private IEstadoServices service;
 	
 	@GetMapping()
-	public ResponseEntity Get(){return Result(service.getAll());}
+	public ResponseEntity<?> Get(){return Result(service.getAll());}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity Get(@PathVariable Integer id) {return Result( service.getById(id));}
+	public ResponseEntity<?> Get(@PathVariable Integer id) {return Result( service.getById(id));}
 	
 	@PostMapping()
-	public ResponseEntity Create(@RequestBody CreateEstado estado){return Result(service.create(estado));}
+	public ResponseEntity<?> Create(@RequestBody CreateEstado estado){return Result(service.create(estado));}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity Update(@PathVariable Integer id,@RequestBody @Valid UpdateEstadoVM estado){return Result( service.update( new  UpdateEstado(id,estado.descripcion())));}
+	public ResponseEntity<?> Update(@PathVariable Integer id,@RequestBody @Valid UpdateEstadoVM estado){return Result( service.update( new  UpdateEstado(id,estado.descripcion())));}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity Delete(@PathVariable Integer id){return Result(service.delete(id));}
+	public ResponseEntity<?> Delete(@PathVariable Integer id){return Result(service.delete(id));}
 }
