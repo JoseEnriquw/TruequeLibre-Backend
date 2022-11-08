@@ -3,6 +3,7 @@ package com.grupo3.truequelibre.interfaces;
 import java.util.List;
 import javax.validation.Valid;
 import com.grupo3.truequelibre.entity.Publicacion;
+import com.grupo3.truequelibre.responses.Publicacion.PublicacionResponse;
 import com.grupo3.truequelibre.services.PublicacionService.CreatePublicacionRequest;
 import com.grupo3.truequelibre.services.PublicacionService.GetAllByCategoriaFilterRequest;
 import com.grupo3.truequelibre.services.PublicacionService.GetAllByCategoriaRequest;
@@ -11,10 +12,10 @@ import com.grupo3.truequelibre.services.PublicacionService.UpdatePublicacionRequ
 import com.grupo3.truequelibre.tools.Response;
 
 public interface IPublicacionServices {
-	Response<List<Publicacion>> getAll();
-	Response<List<Publicacion>> getAllByCategoria(@Valid GetAllByCategoriaRequest request);
-	Response<List<Publicacion>> getAllByCategoriaFilter(@Valid GetAllByCategoriaFilterRequest request);
-	Response<Publicacion> getById(@Valid GetByIdRequest request);
+	Response<List<PublicacionResponse>> getAll();
+	Response<List<PublicacionResponse>> getAllByCategoria(@Valid GetAllByCategoriaRequest request);
+	Response<List<PublicacionResponse>> getAllByCategoriaFilter(@Valid GetAllByCategoriaFilterRequest request);
+	Response<PublicacionResponse> getById(@Valid GetByIdRequest request);
 	Response<?> create(@Valid CreatePublicacionRequest request);
 	Response<?> update(@Valid UpdatePublicacionRequest request);
 	Response<?> delete(@Valid GetByIdRequest request);

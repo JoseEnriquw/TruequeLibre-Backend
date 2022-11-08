@@ -8,7 +8,7 @@ import com.grupo3.truequelibre.tools.Response;
 
 public class ControllerBase {
 
-	public ResponseEntity Result(Response response)
+	public ResponseEntity<?> Result(Response<?> response)
 	{
 		if(!response.IsValid())
 		{
@@ -23,7 +23,7 @@ public class ControllerBase {
     	return new ResponseEntity<List<Error>> (response.getErrors(),response.getHeaders(),response.getStatus());
     }
     
-    private  ResponseEntity RequestSuccess(Response response)
+    private  ResponseEntity<?> RequestSuccess(Response<?> response)
     {
     	return new ResponseEntity<> (response.getBody(),response.getHeaders(),response.getStatus());
     }

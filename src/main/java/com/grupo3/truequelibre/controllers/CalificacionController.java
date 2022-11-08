@@ -13,19 +13,19 @@ import com.grupo3.truequelibre.services.CalificacionService.CreateCalificacionRe
 import com.grupo3.truequelibre.services.CalificacionService.FiltroCalificacionRequest;
 
 @RestController
-@RequestMapping(path="/calificacion")
+@RequestMapping(path="api/v1/calificacion")
 public class CalificacionController extends ControllerBase{
 	
 	@Autowired
 	ICalificacionServices service;
 	
 	@GetMapping
-	public ResponseEntity Get(){return Result(service.getAll());}
+	public ResponseEntity<?> Get(){return Result(service.getAll());}
 	
 	@PostMapping
-	public ResponseEntity Create(@RequestBody CreateCalificacionRequest request){return Result(service.create(request));}
+	public ResponseEntity<?> Create(@RequestBody CreateCalificacionRequest request){return Result(service.create(request));}
 	
 	@PostMapping("/filtrar")
-	public ResponseEntity GetByTipo(@RequestBody FiltroCalificacionRequest tipoCalificacion){return Result(service.getByTipo(tipoCalificacion));}
+	public ResponseEntity<?> GetByTipo(@RequestBody FiltroCalificacionRequest tipoCalificacion){return Result(service.getByTipo(tipoCalificacion));}
 }
 

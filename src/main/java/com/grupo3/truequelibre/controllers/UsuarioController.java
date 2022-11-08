@@ -19,7 +19,7 @@ import com.grupo3.truequelibre.services.UsuarioService.UpdateUsuarioRequest;
 import com.grupo3.truequelibre.viewmodels.UpdateUsuarioVM;
 
 @RestController
-@RequestMapping(path="/usuario")
+@RequestMapping(path="api/v1/usuario")
 public class UsuarioController extends ControllerBase{
 
 	@Autowired

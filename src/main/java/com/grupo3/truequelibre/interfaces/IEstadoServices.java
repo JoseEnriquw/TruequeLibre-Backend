@@ -13,8 +13,8 @@ public interface IEstadoServices {
  
 	Response<List<Estado>> getAll();
 	Response<Estado> getById(Integer id);
-	Response create(CreateEstado request);
-	Response update(@Valid UpdateEstado request);
-	Response delete(Integer id);
+	Response<?> create(CreateEstado request);
+	Response<?> update(@Valid UpdateEstado request);
+	Response<?> delete(Integer id);
 	
 }
