@@ -23,6 +23,10 @@ import com.grupo3.truequelibre.entity.Localidad;
 import com.grupo3.truequelibre.entity.Publicacion;
 import com.grupo3.truequelibre.entity.Usuario;
 import com.grupo3.truequelibre.interfaces.IPublicacionServices;
+import com.grupo3.truequelibre.responses.Categoria.CategoriaResponse;
+import com.grupo3.truequelibre.responses.Condicion.CondicionResponse;
+import com.grupo3.truequelibre.responses.Localidad.LocalidadResponse;
+import com.grupo3.truequelibre.responses.Publicacion.PublicacionDropdownResponse;
 import com.grupo3.truequelibre.responses.Publicacion.PublicacionResponse;
 import com.grupo3.truequelibre.responses.Usuario.UsuarioPublicacionResponse;
 import com.grupo3.truequelibre.tools.ErrorMessage;
@@ -278,6 +282,36 @@ public class PublicacionServices implements IPublicacionServices {
 			response.setStatus(HttpStatus.OK);
 		}
 		return response;
+	}
+
+	@Override
+	public Response<PublicacionDropdownResponse> getDataDropdown() {
+		Response<PublicacionDropdownResponse> response = new Response<>();
+		
+		List<Categoria> categorias = categoriaDao.findAll();
+		List<Condicion> condiciones = condicionDao.findAll();
+		List<Localidad> localidades = localidadDao.findAll();
+		
+		List<CategoriaResponse> listaCategoriaResponse = new ArrayList<>();
+		List<CondicionResponse> listaCondicionResponse = new ArrayList<>();
+		List<LocalidadResponse> listaLocalidadResponse = new ArrayList<>();
+		
+		for(Categoria item: categorias) {
+			listaCategoriaResponse.add(new CategoriaResponse(item.getId(),item.getDescripcion()));
+		}
+		for(Condicion item: condiciones) {
+			listaCondicionResponse.add(new CondicionResponse(item.getId(),item.getDescripcion()));
+		}
+		for(Localidad item: localidades) {
+			listaLocalidadResponse.add(new LocalidadResponse(item.getId(),StringUtils.armarUbicacion(item)));
+		}
+		PublicacionDropdownResponse listaDropdown = new PublicacionDropdownResponse(listaCategoriaResponse,listaCondicionResponse,listaLocalidadResponse);
+		
+		response.setBody(listaDropdown);
+		response.setStatus(HttpStatus.OK);
+		
+		return response;
+		
 	}
 	
 }
