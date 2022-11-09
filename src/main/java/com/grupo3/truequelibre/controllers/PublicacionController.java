@@ -60,4 +60,7 @@ public class PublicacionController extends ControllerBase {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> Delete(@PathVariable Integer id){return Result(service.delete(new GetByIdRequest(id)));}
+	
+	@GetMapping("/cargarDropdown")
+	public ResponseEntity<?> getDataDropDown(){return Result(service.getDataDropdown());}
 }
