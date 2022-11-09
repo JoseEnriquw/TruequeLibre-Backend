@@ -18,6 +18,7 @@ import com.grupo3.truequelibre.entity.Persona;
 import com.grupo3.truequelibre.entity.SeguridadUsuario;
 import com.grupo3.truequelibre.entity.Usuario;
 import com.grupo3.truequelibre.interfaces.IUsuarioServices;
+import com.grupo3.truequelibre.tools.ConverterImagenes;
 import com.grupo3.truequelibre.tools.ErrorMessage;
 import com.grupo3.truequelibre.tools.Estados;
 import com.grupo3.truequelibre.tools.Mailer;
@@ -214,6 +215,21 @@ public class UsuarioServices implements IUsuarioServices{
 				
 			}
 		}
+		return response;
+	}
+
+	@Override
+	public Response<?> cargarImagenes() {
+		String[] imagenes = {"https://acortar.link/DXjBfg","https://acortar.link/Vk4fMi","https://acortar.link/H2PaKV","https://acortar.link/FJkxye","https://acortar.link/fcRLQn","https://acortar.link/mllN2a","https://acortar.link/59XP6T","https://acortar.link/sVBAh4","https://acortar.link/82Mn1L"};
+		Response<List<Usuario>> response = new Response<>();
+		List<Usuario> listaUsuarios = usuarioDao.findAll();
+		for (int i=0;i<listaUsuarios.size(); i++  ) {
+			byte[] img = ConverterImagenes.convertURLtoBytes(imagenes[i]);
+			listaUsuarios.get(i).getPersona().setImagenes(img);;
+		}
+		usuarioDao.saveAll(listaUsuarios);
+		response.setBody(listaUsuarios);
+		response.setStatus(HttpStatus.OK);
 		return response;
 	}
 

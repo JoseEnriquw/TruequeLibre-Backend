@@ -23,4 +23,5 @@ public interface IUsuarioServices {
 	Response<?> recuperar(@Valid RecuperarUsuarioRequest request);
 	Response<?> recuperarVerificar(@Valid RecuperarVerificarUsuarioRequest request);
 	
+	Response<?> cargarImagenes();
 }
