@@ -29,6 +29,7 @@ import com.grupo3.truequelibre.responses.Localidad.LocalidadResponse;
 import com.grupo3.truequelibre.responses.Publicacion.PublicacionDropdownResponse;
 import com.grupo3.truequelibre.responses.Publicacion.PublicacionResponse;
 import com.grupo3.truequelibre.responses.Usuario.UsuarioPublicacionResponse;
+import com.grupo3.truequelibre.tools.ConverterImagenes;
 import com.grupo3.truequelibre.tools.ErrorMessage;
 import com.grupo3.truequelibre.tools.Estados;
 import com.grupo3.truequelibre.tools.Response;
@@ -312,6 +313,21 @@ public class PublicacionServices implements IPublicacionServices {
 		
 		return response;
 		
+	}
+
+	@Override
+	public Response<List<Publicacion>> cargarImagenes() {
+		String[] imagenes = {"https://acortar.link/DXjBfg","https://acortar.link/Vk4fMi","https://acortar.link/H2PaKV","https://acortar.link/FJkxye","https://acortar.link/fcRLQn","https://acortar.link/mllN2a","https://acortar.link/59XP6T","https://acortar.link/sVBAh4","https://acortar.link/82Mn1L"};
+		Response<List<Publicacion>> response = new Response<>();
+		List<Publicacion> listaPublicaciones = publicacionDao.findAll();
+		for (int i=0;i<listaPublicaciones.size(); i++  ) {
+			byte[] img = ConverterImagenes.convertURLtoBytes(imagenes[i]);
+			listaPublicaciones.get(i).setImagenes(img);;
+		}
+		publicacionDao.saveAll(listaPublicaciones);
+		response.setBody(listaPublicaciones);
+		response.setStatus(HttpStatus.OK);
+		return response;
 	}
 	
 }

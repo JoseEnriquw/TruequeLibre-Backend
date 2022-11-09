@@ -3,6 +3,7 @@ package com.grupo3.truequelibre.interfaces;
 import java.util.List;
 import javax.validation.Valid;
 
+import com.grupo3.truequelibre.entity.Publicacion;
 import com.grupo3.truequelibre.responses.Publicacion.PublicacionDropdownResponse;
 import com.grupo3.truequelibre.responses.Publicacion.PublicacionResponse;
 import com.grupo3.truequelibre.services.PublicacionService.CreatePublicacionRequest;
@@ -23,4 +24,5 @@ public interface IPublicacionServices {
 	
 	
 	Response<PublicacionDropdownResponse> getDataDropdown();
+	Response<List<Publicacion>> cargarImagenes();
 }

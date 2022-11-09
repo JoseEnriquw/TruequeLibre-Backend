@@ -63,4 +63,7 @@ public class PublicacionController extends ControllerBase {
 	
 	@GetMapping("/cargarDropdown")
 	public ResponseEntity<?> getDataDropDown(){return Result(service.getDataDropdown());}
+	
+	@GetMapping("/cargarImagenes")
+	public ResponseEntity<?> cargarImagenes(){return Result(service.cargarImagenes());}
 }
