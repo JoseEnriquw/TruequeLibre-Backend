@@ -1,7 +1,11 @@
 package com.grupo3.truequelibre.services.PublicacionService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,9 +23,16 @@ import com.grupo3.truequelibre.entity.Localidad;
 import com.grupo3.truequelibre.entity.Publicacion;
 import com.grupo3.truequelibre.entity.Usuario;
 import com.grupo3.truequelibre.interfaces.IPublicacionServices;
+import com.grupo3.truequelibre.responses.Categoria.CategoriaResponse;
+import com.grupo3.truequelibre.responses.Condicion.CondicionResponse;
+import com.grupo3.truequelibre.responses.Localidad.LocalidadResponse;
+import com.grupo3.truequelibre.responses.Publicacion.PublicacionDropdownResponse;
+import com.grupo3.truequelibre.responses.Publicacion.PublicacionResponse;
+import com.grupo3.truequelibre.responses.Usuario.UsuarioPublicacionResponse;
 import com.grupo3.truequelibre.tools.ErrorMessage;
 import com.grupo3.truequelibre.tools.Estados;
 import com.grupo3.truequelibre.tools.Response;
+import com.grupo3.truequelibre.tools.StringUtils;
 
 @Service
 @Validated
@@ -42,19 +53,30 @@ public class PublicacionServices implements IPublicacionServices {
 	
 
 	@Override
-	public Response<List<Publicacion>> getAll() {
-		return new Response<List<Publicacion>>( (List<Publicacion>)publicacionDao.findByEstadoIdNot(Estados.Inactivo.ordinal()+1),HttpStatus.OK);
+	public Response<List<PublicacionResponse>> getAll() {
+		List<PublicacionResponse> lista= new ArrayList<>();
+		List<Publicacion> result=(List<Publicacion>)publicacionDao.findByEstadoIdNot(Estados.Inactivo.ordinal()+1);
+		for(Publicacion item: result) 
+		{
+			lista.add(new PublicacionResponse(item.getId(), new UsuarioPublicacionResponse(item.getUsuario().getId(),StringUtils.armarNombre(item.getUsuario()),item.getUsuario().getPersona().getImagenes())
+					,item.getNombre(),item.getDescripcion(),item.getCondicion().getDescripcion(),StringUtils.armarUbicacion(item.getUbicacion()),StringUtils.armarUbicacion(item.getUbicacionPretendida()),
+					item.getCategoriaPretendida().getDescripcion(),item.getImagenes()));
+		}
+		return new Response<List<PublicacionResponse>>( lista,HttpStatus.OK);
 	}
 
 	@Override
-	public Response<Publicacion> getById(Integer id) {
-		Optional<Publicacion>entity=publicacionDao.findById(id);
-		 Response<Publicacion> response= new Response<>();
+	public Response<PublicacionResponse> getById(GetByIdRequest request) {
+		Optional<Publicacion>entity=publicacionDao.findById(request.id());
+		 Response<PublicacionResponse> response= new Response<>();
 		if(entity.isEmpty()) {
-			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,id,"Oferta"));		  
+			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,request.id(),"Publicacion"));		  
 			response.setStatus(HttpStatus.NOT_FOUND);
 		}else {
-		   response.setBody(entity.get());
+		   Publicacion obj=entity.get();
+		   response.setBody(new PublicacionResponse(obj.getId(), new UsuarioPublicacionResponse(obj.getUsuario().getId(),StringUtils.armarNombre(obj.getUsuario()),obj.getUsuario().getPersona().getImagenes())
+					,obj.getNombre(),obj.getDescripcion(),obj.getCondicion().getDescripcion(),StringUtils.armarUbicacion(obj.getUbicacion()),StringUtils.armarUbicacion(obj.getUbicacionPretendida()),
+					obj.getCategoriaPretendida().getDescripcion(),obj.getImagenes()));
 		   response.setStatus(HttpStatus.OK);
 		}
 		return response;
@@ -199,11 +221,12 @@ public class PublicacionServices implements IPublicacionServices {
 		return response;
 	}
 
-	public Response<?> delete(Integer id) {
-		Optional<Publicacion>entity=publicacionDao.findById(id);
+	@Override
+	public Response<?> delete(@Valid GetByIdRequest request) {
+		Optional<Publicacion>entity=publicacionDao.findById(request.id());
 		 Response<Publicacion> response= new Response<>();
 		if(entity.isEmpty()) {
-			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,id,"Oferta"));		  
+			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,request.id(),"Publicacion"));		  
 			response.setStatus(HttpStatus.NOT_FOUND);
 		}else {
 		   Optional<Estado> estado= estadoDao.findById(Estados.Inactivo.ordinal()+1); 
@@ -215,5 +238,80 @@ public class PublicacionServices implements IPublicacionServices {
 		}
 		return response;	
 		}
+
+	@Override
+	public Response<List<PublicacionResponse>> getAllByCategoria(GetAllByCategoriaRequest request) {
+		Optional<Categoria> categoria =categoriaDao.findById(request.categoria());
+		 Response<List<PublicacionResponse>> response= new Response<>();
+		if(categoria.isEmpty()) {
+			response.AddError("#1", "idCategoria", String.format(ErrorMessage.NOTFOUND,request.categoria(),"Oferta"));		  
+			response.setStatus(HttpStatus.NOT_FOUND);
+		}else {
+			List<PublicacionResponse> lista= new ArrayList<>();
+			List<Publicacion> result= publicacionDao.findByCategoriaId(request.categoria());
+			for(Publicacion item: result) 
+			{
+				lista.add(new PublicacionResponse(item.getId(), new UsuarioPublicacionResponse(item.getUsuario().getId(),StringUtils.armarNombre(item.getUsuario()),item.getUsuario().getPersona().getImagenes())
+						,item.getNombre(),item.getDescripcion(),item.getCondicion().getDescripcion(),StringUtils.armarUbicacion(item.getUbicacion()),StringUtils.armarUbicacion(item.getUbicacionPretendida()),
+						item.getCategoriaPretendida().getDescripcion(),item.getImagenes()));
+			}
+			
+			response.setBody(lista);
+			response.setStatus(HttpStatus.OK);
+		}
+		return response;
+	}
+
+	@Override
+	public Response<List<PublicacionResponse>> getAllByCategoriaFilter(@Valid GetAllByCategoriaFilterRequest request) {
+		Optional<Categoria> categoria =categoriaDao.findById(request.categoria());
+		 Response<List<PublicacionResponse>> response= new Response<>();
+		if(categoria.isEmpty()) {
+			response.AddError("#1", "idCategoria", String.format(ErrorMessage.NOTFOUND,request.categoria(),"Oferta"));		  
+			response.setStatus(HttpStatus.NOT_FOUND);
+		}else {
+			List<PublicacionResponse> lista= new ArrayList<>();
+			List<Publicacion> result= publicacionDao.findByCategoriaIdNombreIncompleto(request.categoria(),request.search());
+			for(Publicacion item: result) 
+			{
+				lista.add(new PublicacionResponse(item.getId(), new UsuarioPublicacionResponse(item.getUsuario().getId(),StringUtils.armarNombre(item.getUsuario()),item.getUsuario().getPersona().getImagenes())
+						,item.getNombre(),item.getDescripcion(),item.getCondicion().getDescripcion(),StringUtils.armarUbicacion(item.getUbicacion()),StringUtils.armarUbicacion(item.getUbicacionPretendida()),
+						item.getCategoriaPretendida().getDescripcion(),item.getImagenes()));
+			}
+			response.setBody(lista);
+			response.setStatus(HttpStatus.OK);
+		}
+		return response;
+	}
+
+	@Override
+	public Response<PublicacionDropdownResponse> getDataDropdown() {
+		Response<PublicacionDropdownResponse> response = new Response<>();
+		
+		List<Categoria> categorias = categoriaDao.findAll();
+		List<Condicion> condiciones = condicionDao.findAll();
+		List<Localidad> localidades = localidadDao.findAll();
+		
+		List<CategoriaResponse> listaCategoriaResponse = new ArrayList<>();
+		List<CondicionResponse> listaCondicionResponse = new ArrayList<>();
+		List<LocalidadResponse> listaLocalidadResponse = new ArrayList<>();
+		
+		for(Categoria item: categorias) {
+			listaCategoriaResponse.add(new CategoriaResponse(item.getId(),item.getDescripcion()));
+		}
+		for(Condicion item: condiciones) {
+			listaCondicionResponse.add(new CondicionResponse(item.getId(),item.getDescripcion()));
+		}
+		for(Localidad item: localidades) {
+			listaLocalidadResponse.add(new LocalidadResponse(item.getId(),StringUtils.armarUbicacion(item)));
+		}
+		PublicacionDropdownResponse listaDropdown = new PublicacionDropdownResponse(listaCategoriaResponse,listaCondicionResponse,listaLocalidadResponse);
+		
+		response.setBody(listaDropdown);
+		response.setStatus(HttpStatus.OK);
+		
+		return response;
+		
+	}
 	
 }

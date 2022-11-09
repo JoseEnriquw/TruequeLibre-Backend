@@ -34,8 +34,4 @@ public record CreateUsuarioRequest(
 		@NotBlank
 		@Size(min=8)
 		String contrasenia
-		
-		
-		) {
-
-}
+		) {}

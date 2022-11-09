@@ -19,21 +19,22 @@ public class Categoria {
 	private String descripcion;
 	@Lob
 	@Column
-	private byte[] imagen;
+	private byte[] imagenes;
+
 	
 	public Categoria() {
 		
+	}
+
+	public Categoria(String descripcion, byte[] imagenes) {
+		this.descripcion = descripcion;
+		this.imagenes = imagenes;
 	}
 
 	public Categoria(String descripcion) {
 		this.descripcion = descripcion;
 	}
 	
-	public Categoria(String descripcion, byte[] imagen) {
-		this.descripcion = descripcion;
-		this.imagen = imagen;
-	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -50,15 +51,14 @@ public class Categoria {
 		this.descripcion = descripcion;
 	}
 
-	public byte[] getImagen() {
-		return imagen;
+	public byte[] getImagenes() {
+		return imagenes;
 	}
 
-	public void setImagen(byte[] imagen) {
-		this.imagen = imagen;
+	public void setImagenes(byte[] imagenes) {
+		this.imagenes = imagenes;
 	}
-	
-	
+
 	
 	
 }

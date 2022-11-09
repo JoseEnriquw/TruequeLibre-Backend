@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grupo3.truequelibre.interfaces.ICategoriaServices;
 import com.grupo3.truequelibre.services.CategoriaService.CreateCategoriaRequest;
 
+
 @RestController
-@RequestMapping(path="/categoria")
+@RequestMapping(path="api/v1/categoria")
 public class CategoriaController extends ControllerBase {
+
 	@Autowired
-	private ICategoriaServices service;
-	
+	ICategoriaServices service;
+
 	@GetMapping()
 	public ResponseEntity<?> Get(){return Result(service.getAll());}
 	

@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.grupo3.truequelibre.interfaces.IPublicacionServices;
 import com.grupo3.truequelibre.services.PublicacionService.CreatePublicacionRequest;
+import com.grupo3.truequelibre.services.PublicacionService.GetAllByCategoriaFilterRequest;
+import com.grupo3.truequelibre.services.PublicacionService.GetAllByCategoriaRequest;
+import com.grupo3.truequelibre.services.PublicacionService.GetByIdRequest;
 import com.grupo3.truequelibre.services.PublicacionService.UpdatePublicacionRequest;
 import com.grupo3.truequelibre.viewmodels.UpdatePublicacionVM;
 
@@ -22,10 +25,19 @@ public class PublicacionController extends ControllerBase {
 	IPublicacionServices service;
 	
 	@GetMapping
-	public ResponseEntity<?> Get(){return Result(service.getAll());}
+	public ResponseEntity<?> GetAll(){return Result(service.getAll());}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> Get(@PathVariable Integer id) {return Result( service.getById(id));}
+	public ResponseEntity<?> Get(@PathVariable Integer id) {return Result( service.getById(new GetByIdRequest(id)));}
+	
+	@GetMapping("/categoria/{idCategoria}")
+	public ResponseEntity<?> GetAll(@PathVariable Integer idCategoria) {return Result(
+			service.getAllByCategoria(
+			new GetAllByCategoriaRequest(idCategoria)
+			));}
+	
+	@GetMapping("/filtrar")
+	public ResponseEntity<?> GetAll(@RequestBody GetAllByCategoriaFilterRequest request){return Result(service.getAllByCategoriaFilter(request));}
 	
 	@PostMapping()
 	public ResponseEntity<?> Create(@RequestBody CreatePublicacionRequest request){return Result(service.create(request));}
@@ -47,5 +59,8 @@ public class PublicacionController extends ControllerBase {
 				)));}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> Delete(@PathVariable Integer id){return Result(service.delete(id));}
+	public ResponseEntity<?> Delete(@PathVariable Integer id){return Result(service.delete(new GetByIdRequest(id)));}
+	
+	@GetMapping("/cargarDropdown")
+	public ResponseEntity<?> getDataDropDown(){return Result(service.getDataDropdown());}
 }
