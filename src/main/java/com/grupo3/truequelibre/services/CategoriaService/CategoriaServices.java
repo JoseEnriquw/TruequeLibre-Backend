@@ -12,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import com.grupo3.truequelibre.dao.ICategoriaDao;
 import com.grupo3.truequelibre.entity.Categoria;
 import com.grupo3.truequelibre.interfaces.ICategoriaServices;
-import com.grupo3.truequelibre.services.Categoria.UpdateCategoriaRequest;
 import com.grupo3.truequelibre.tools.ConverterImagenes;
 import com.grupo3.truequelibre.tools.Response;
 
@@ -25,8 +24,8 @@ public class CategoriaServices implements ICategoriaServices{
 
 	@Override
 	public Response<List<Categoria>> getAll() {
-		List<Categoria> listaCategorias = categoriaDao.findAll();
-		return new Response<>(listaCategorias,HttpStatus.OK);		
+
+		return new Response<>(categoriaDao.findAll(),HttpStatus.OK);		
 	}
 
 	@Override

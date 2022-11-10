@@ -18,12 +18,14 @@ import com.grupo3.truequelibre.entity.Persona;
 import com.grupo3.truequelibre.entity.SeguridadUsuario;
 import com.grupo3.truequelibre.entity.Usuario;
 import com.grupo3.truequelibre.interfaces.IUsuarioServices;
+import com.grupo3.truequelibre.responses.Usuario.UsuarioResponse;
 import com.grupo3.truequelibre.tools.ConverterImagenes;
 import com.grupo3.truequelibre.tools.ErrorMessage;
 import com.grupo3.truequelibre.tools.Estados;
 import com.grupo3.truequelibre.tools.Mailer;
 import com.grupo3.truequelibre.tools.Response;
 import com.grupo3.truequelibre.tools.SeguridadTools;
+import com.grupo3.truequelibre.tools.StringUtils;
 
 @Service
 @Validated
@@ -137,8 +139,8 @@ public class UsuarioServices implements IUsuarioServices{
 	}
 
 	@Override
-	public Response<?> login(LoginUsuarioRequest request) {
-		Response<Usuario> response = new Response<>();
+	public Response<UsuarioResponse> login(LoginUsuarioRequest request) {
+		Response<UsuarioResponse> response = new Response<>();
 		Optional<Usuario> entity = usuarioDao.findByMailAndEstadoIdNot(request.email(),Estados.Inactivo.ordinal()+1);
 		if(entity.isEmpty()) {
 			response.AddError("#1", "email","The Email " + request.email() + " of usuario was not found in the database");
@@ -147,7 +149,7 @@ public class UsuarioServices implements IUsuarioServices{
 		else {
 			Usuario usuario = entity.get();
 			if(usuario.getContrasenia().equals(request.contrasenia())) {
-				response.setBody(usuario);
+				response.setBody(new UsuarioResponse(usuario.getId(),StringUtils.armarNombre(usuario),usuario.getMail(),usuario.getPersona().getImagenes()));
 				response.setStatus(HttpStatus.OK);
 			}
 			else {
