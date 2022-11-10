@@ -1,5 +1,9 @@
 package com.grupo3.truequelibre.services.UsuarioService;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,11 +22,14 @@ import com.grupo3.truequelibre.entity.Persona;
 import com.grupo3.truequelibre.entity.SeguridadUsuario;
 import com.grupo3.truequelibre.entity.Usuario;
 import com.grupo3.truequelibre.interfaces.IUsuarioServices;
+import com.grupo3.truequelibre.responses.Localidad.LocalidadResponse;
+import com.grupo3.truequelibre.responses.Usuario.UsuarioDropdownResponse;
 import com.grupo3.truequelibre.tools.ErrorMessage;
 import com.grupo3.truequelibre.tools.Estados;
 import com.grupo3.truequelibre.tools.Mailer;
 import com.grupo3.truequelibre.tools.Response;
 import com.grupo3.truequelibre.tools.SeguridadTools;
+import com.grupo3.truequelibre.tools.StringUtils;
 
 @Service
 @Validated
@@ -61,8 +68,8 @@ public class UsuarioServices implements IUsuarioServices{
 	}
 
 	@Override
-	public Response<Usuario> create(CreateUsuarioRequest request) {
-		Response<Usuario> response = new Response<>();
+	public Response<?> create(CreateUsuarioRequest request) {
+		Response<?> response = new Response<>();
 		
 		Optional<Localidad> ubicacion =localidadDao.findById(request.localidad());
 		if(ubicacion.isEmpty()) {
@@ -71,11 +78,19 @@ public class UsuarioServices implements IUsuarioServices{
 		}
 		else {
 			Optional<Estado> estado= estadoDao.findById(Estados.Activo.ordinal()+1); 
-			Persona persona = new Persona(request.dni(),request.nombre(),request.apellido(),request.direccion(),request.fechaNacimiento(),request.telefono(),ubicacion.get());
+			 SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+		     String fecha = String.valueOf(request.fechaNacimiento());
+		     Date aux = null;
+		     try {
+				aux = (Date) formato.parse(fecha);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Persona persona = new Persona(request.dni(),request.nombre(),request.apellido(),request.direccion(),aux,request.telefono(),ubicacion.get());
 			Usuario usuario = new Usuario(request.mail(),request.contrasenia(),estado.get(),persona);
-			usuario = usuarioDao.save(usuario);
-			response.setBody(usuario);
-			response.setStatus(HttpStatus.OK);
+			usuario = usuarioDao.save(usuario);		
+			response.setStatus(HttpStatus.CREATED);
 		}
 		
 		
@@ -215,6 +230,24 @@ public class UsuarioServices implements IUsuarioServices{
 			}
 		}
 		return response;
+	}
+	
+	@Override
+	public Response<UsuarioDropdownResponse> getDataDropdown() {
+		Response<UsuarioDropdownResponse> response = new Response<>();	
+		List<Localidad> localidades = localidadDao.findAll();			
+		List<LocalidadResponse> listaLocalidadResponse = new ArrayList<>();	
+	
+		for(Localidad item: localidades) {
+			listaLocalidadResponse.add(new LocalidadResponse(item.getId(),StringUtils.armarUbicacion(item)));
+		}
+		UsuarioDropdownResponse listaDropdown = new UsuarioDropdownResponse(listaLocalidadResponse);
+		
+		response.setBody(listaDropdown);
+		response.setStatus(HttpStatus.OK);
+		
+		return response;
+		
 	}
 
 }
