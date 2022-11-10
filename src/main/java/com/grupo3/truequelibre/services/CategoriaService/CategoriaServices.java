@@ -12,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import com.grupo3.truequelibre.dao.ICategoriaDao;
 import com.grupo3.truequelibre.entity.Categoria;
 import com.grupo3.truequelibre.interfaces.ICategoriaServices;
-import com.grupo3.truequelibre.services.Categoria.UpdateCategoriaRequest;
 import com.grupo3.truequelibre.tools.ConverterImagenes;
 import com.grupo3.truequelibre.tools.Response;
 

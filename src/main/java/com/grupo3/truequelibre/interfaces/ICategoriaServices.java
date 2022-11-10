@@ -5,8 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.grupo3.truequelibre.entity.Categoria;
-import com.grupo3.truequelibre.services.Categoria.UpdateCategoriaRequest;
 import com.grupo3.truequelibre.services.CategoriaService.CreateCategoriaRequest;
+import com.grupo3.truequelibre.services.CategoriaService.UpdateCategoriaRequest;
 import com.grupo3.truequelibre.tools.Response;
 
 
