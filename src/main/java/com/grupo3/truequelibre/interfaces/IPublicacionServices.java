@@ -9,12 +9,13 @@ import com.grupo3.truequelibre.responses.Publicacion.PublicacionResponse;
 import com.grupo3.truequelibre.services.PublicacionService.CreatePublicacionRequest;
 import com.grupo3.truequelibre.services.PublicacionService.GetAllByCategoriaFilterRequest;
 import com.grupo3.truequelibre.services.PublicacionService.GetAllByCategoriaRequest;
+import com.grupo3.truequelibre.services.PublicacionService.GetAllPublicacionRequest;
 import com.grupo3.truequelibre.services.PublicacionService.GetByIdRequest;
 import com.grupo3.truequelibre.services.PublicacionService.UpdatePublicacionRequest;
 import com.grupo3.truequelibre.tools.Response;
 
 public interface IPublicacionServices {
-	Response<List<PublicacionResponse>> getAll();
+	Response<List<PublicacionResponse>> getAll(@Valid GetAllPublicacionRequest request);
 	Response<List<PublicacionResponse>> getAllByCategoria(@Valid GetAllByCategoriaRequest request);
 	Response<List<PublicacionResponse>> getAllByCategoriaFilter(@Valid GetAllByCategoriaFilterRequest request);
 	Response<PublicacionResponse> getById(@Valid GetByIdRequest request);

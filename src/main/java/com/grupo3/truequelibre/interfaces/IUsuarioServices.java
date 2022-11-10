@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import com.grupo3.truequelibre.entity.Usuario;
 import com.grupo3.truequelibre.responses.Usuario.UsuarioResponse;
+import com.grupo3.truequelibre.services.PublicacionService.GetAllPublicacionRequest;
 import com.grupo3.truequelibre.services.UsuarioService.CreateUsuarioRequest;
 import com.grupo3.truequelibre.services.UsuarioService.LoginUsuarioRequest;
 import com.grupo3.truequelibre.services.UsuarioService.RecuperarUsuarioRequest;
