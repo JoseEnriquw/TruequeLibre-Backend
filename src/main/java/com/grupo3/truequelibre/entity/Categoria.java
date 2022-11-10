@@ -20,6 +20,7 @@ public class Categoria {
 	@Lob
 	@Column
 	private byte[] imagenes;
+
 	
 	public Categoria() {
 		

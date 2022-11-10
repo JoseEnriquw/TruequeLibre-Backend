@@ -24,8 +24,8 @@ public class CategoriaServices implements ICategoriaServices{
 
 	@Override
 	public Response<List<Categoria>> getAll() {
-
-		return new Response<>(categoriaDao.findAll(),HttpStatus.OK);		
+		List<Categoria> listaCategorias = categoriaDao.findAll();
+		return new Response<>(listaCategorias,HttpStatus.OK);		
 	}
 
 	@Override

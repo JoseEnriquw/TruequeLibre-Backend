@@ -18,14 +18,12 @@ import com.grupo3.truequelibre.entity.Persona;
 import com.grupo3.truequelibre.entity.SeguridadUsuario;
 import com.grupo3.truequelibre.entity.Usuario;
 import com.grupo3.truequelibre.interfaces.IUsuarioServices;
-import com.grupo3.truequelibre.responses.Usuario.UsuarioResponse;
 import com.grupo3.truequelibre.tools.ConverterImagenes;
 import com.grupo3.truequelibre.tools.ErrorMessage;
 import com.grupo3.truequelibre.tools.Estados;
 import com.grupo3.truequelibre.tools.Mailer;
 import com.grupo3.truequelibre.tools.Response;
 import com.grupo3.truequelibre.tools.SeguridadTools;
-import com.grupo3.truequelibre.tools.StringUtils;
 
 @Service
 @Validated
@@ -139,8 +137,8 @@ public class UsuarioServices implements IUsuarioServices{
 	}
 
 	@Override
-	public Response<UsuarioResponse> login(LoginUsuarioRequest request) {
-		Response<UsuarioResponse> response = new Response<>();
+	public Response<?> login(LoginUsuarioRequest request) {
+		Response<Usuario> response = new Response<>();
 		Optional<Usuario> entity = usuarioDao.findByMailAndEstadoIdNot(request.email(),Estados.Inactivo.ordinal()+1);
 		if(entity.isEmpty()) {
 			response.AddError("#1", "email","The Email " + request.email() + " of usuario was not found in the database");
@@ -149,7 +147,7 @@ public class UsuarioServices implements IUsuarioServices{
 		else {
 			Usuario usuario = entity.get();
 			if(usuario.getContrasenia().equals(request.contrasenia())) {
-				response.setBody(new UsuarioResponse(usuario.getId(),StringUtils.armarNombre(usuario),usuario.getMail(),usuario.getPersona().getImagenes()));
+				response.setBody(usuario);
 				response.setStatus(HttpStatus.OK);
 			}
 			else {
@@ -222,7 +220,7 @@ public class UsuarioServices implements IUsuarioServices{
 
 	@Override
 	public Response<?> cargarImagenes() {
-		String[] imagenes = {"https://acortar.link/DXjBfg","https://acortar.link/Vk4fMi","https://acortar.link/H2PaKV","https://acortar.link/FJkxye","https://acortar.link/fcRLQn","https://acortar.link/mllN2a","https://acortar.link/59XP6T","https://acortar.link/sVBAh4","https://acortar.link/82Mn1L"};
+		String[] imagenes = {"https://acortar.link/QnpV8m","https://acortar.link/Qzv1vc","https://acortar.link/uJ52QU","https://acortar.link/OCj223","https://acortar.link/fF790R","https://acortar.link/VZS6Rb","https://acortar.link/Vekexx","https://acortar.link/xgMc1F","https://acortar.link/xVTvF3","https://acortar.link/yKbRzX","https://acortar.link/eVGdJM","https://acortar.link/HdiyiX","https://acortar.link/caW5Z5","https://acortar.link/BvUBGE","https://acortar.link/cd0I0l","https://acortar.link/6Uy4xi","https://acortar.link/9gjuNa","https://acortar.link/LcRTF1","https://acortar.link/eLLiZc","https://acortar.link/AwgnjM","https://acortar.link/JVtYob","https://acortar.link/NQUxrz","https://acortar.link/2LaIAW","https://acortar.link/na87kA","https://acortar.link/DWBg1g"};
 		Response<List<Usuario>> response = new Response<>();
 		List<Usuario> listaUsuarios = usuarioDao.findAll();
 		for (int i=0;i<listaUsuarios.size(); i++  ) {
