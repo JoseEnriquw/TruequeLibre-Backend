@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import com.grupo3.truequelibre.entity.Usuario;
 import com.grupo3.truequelibre.responses.Usuario.UsuarioDropdownResponse;
+import com.grupo3.truequelibre.responses.Usuario.UsuarioResponse;
 import com.grupo3.truequelibre.services.UsuarioService.CreateUsuarioRequest;
 import com.grupo3.truequelibre.services.UsuarioService.LoginUsuarioRequest;
 import com.grupo3.truequelibre.services.UsuarioService.RecuperarUsuarioRequest;
@@ -17,10 +18,11 @@ public interface IUsuarioServices {
 
 	Response<List<Usuario>> getAll();
 	Response<Usuario> getByEmail(String email);
+	Response<UsuarioResponse> getById(Integer id);
 	Response<?> create(@Valid CreateUsuarioRequest usuario);
 	Response<Usuario> update(@Valid UpdateUsuarioRequest usuario);
 	Response<?> delete(String email);
-	Response<?> login(@Valid LoginUsuarioRequest request);
+	Response<Integer> login(@Valid LoginUsuarioRequest request);
 	Response<?> recuperar(@Valid RecuperarUsuarioRequest request);
 	Response<?> recuperarVerificar(@Valid RecuperarVerificarUsuarioRequest request);
 	Response<UsuarioDropdownResponse> getDataDropdown();
