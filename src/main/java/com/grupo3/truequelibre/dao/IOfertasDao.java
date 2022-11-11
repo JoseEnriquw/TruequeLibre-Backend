@@ -29,9 +29,9 @@ public interface IOfertasDao extends JpaRepository<Oferta,Integer>{
 	@Query(value="select * from oferta where id = :idOferta ", nativeQuery=true)
 	Optional<Oferta> findById(@Param("idOferta") Integer idOferta);
 
-	Optional<List<Oferta>> findByEstadoAndPublicacionPrincipal_Usuario(@Param("idEstado") Estado idEstado,@Param("idUsuario") Usuario idUsuario);
-	Optional<List<Oferta>> findByEstadoAndPublicacionOferante_Usuario(@Param("idEstado") Estado idEstado,@Param("idUsuarioOfertante") Usuario idUsuarioOfertante);
-	Optional<List<Oferta>> findByEstadoAndPublicacionOferante_UsuarioOrPublicacionPrincipal_Usuario(@Param("idEstado") Estado idEstado,@Param("idUsuarioOfertante") Usuario idUsuarioOfertante,@Param("idUsuario") Usuario idUsuario);
+	Optional<List<Oferta>> findByEstadoIdAndPublicacionPrincipal_Usuario(Integer idEstado,@Param("idUsuario") Usuario idUsuario);
+	Optional<List<Oferta>> findByEstadoIdAndPublicacionOferante_Usuario( Integer idEstado,@Param("idUsuarioOfertante") Usuario idUsuarioOfertante);
+	Optional<List<Oferta>> findByEstadoIdAndPublicacionOferante_UsuarioOrPublicacionPrincipal_Usuario(Integer idEstado,@Param("idUsuarioOfertante") Usuario idUsuarioOfertante,@Param("idUsuario") Usuario idUsuario);
 	
 	
 

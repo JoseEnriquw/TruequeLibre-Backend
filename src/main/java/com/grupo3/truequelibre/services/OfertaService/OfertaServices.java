@@ -1,5 +1,6 @@
 package com.grupo3.truequelibre.services.OfertaService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.grupo3.truequelibre.entity.Publicacion;
 import com.grupo3.truequelibre.entity.PublicacionesOfertasID;
 import com.grupo3.truequelibre.entity.Usuario;
 import com.grupo3.truequelibre.interfaces.IOfertaServices;
+import com.grupo3.truequelibre.responses.Oferta.OfertaResponse;
 import com.grupo3.truequelibre.tools.ErrorMessage;
 import com.grupo3.truequelibre.tools.Estados;
 import com.grupo3.truequelibre.tools.Response;
@@ -116,24 +118,31 @@ public class OfertaServices implements IOfertaServices {
 	
 
 	@Override
-	public Response<List<Oferta>> filtrar(FiltrarOfertaRequest request) {
+	public Response<List<OfertaResponse>> filtrar(FiltrarOfertaRequest request) {
 		Optional<List<Oferta>>listOfertas=null;
-		Optional<Estado> estado= estadoDao.findById(request.id_estado()); 
+		 
 		switch(request.estado()) {
-			case "Recibidos":listOfertas=ofertaDao.findByEstadoAndPublicacionPrincipal_Usuario(estado.get(),new Usuario(request.id_usuario()));
+			case "Recibidos":listOfertas=ofertaDao.findByEstadoIdAndPublicacionPrincipal_Usuario(Estados.Ofertado.ordinal()+1,new Usuario(request.id_usuario()));
 			break;
-			case "Enviados":listOfertas=ofertaDao.findByEstadoAndPublicacionOferante_Usuario(estado.get(),new Usuario(request.id_usuario()));
+			case "Enviados":listOfertas=ofertaDao.findByEstadoIdAndPublicacionOferante_Usuario(Estados.Ofertado.ordinal()+1,new Usuario(request.id_usuario()));
 			break;
-			case "Aceptados":listOfertas=ofertaDao.findByEstadoAndPublicacionOferante_UsuarioOrPublicacionPrincipal_Usuario(estado.get(),new Usuario(request.id_usuario()),new Usuario(request.id_usuario()));
+			case "Aceptados":listOfertas=ofertaDao.findByEstadoIdAndPublicacionOferante_UsuarioOrPublicacionPrincipal_Usuario(Estados.Aceptado.ordinal()+1,new Usuario(request.id_usuario()),new Usuario(request.id_usuario()));
 			break;
 		}
-		Response<List<Oferta>> response= new Response<>();
+		Response<List<OfertaResponse>> response= new Response<>();
 		if (listOfertas == null || listOfertas.isEmpty()) {
 			response.AddError("#1", "","No ofertas were found with this filters");		  
 			response.setStatus(HttpStatus.NOT_FOUND);
 		}
 		else {
-			response.setBody(listOfertas.get());
+
+			List<OfertaResponse> content= new ArrayList<>();
+			for(Oferta item: listOfertas.get())
+			{
+				
+				content.add(new OfertaResponse(item.getPublicacionOferante().getNombre(),item.getPublicacionOferante().getDescripcion(),item.getPublicacionOferante().getImagenes(),item.getId()));
+			}
+			response.setBody();
 			response.setStatus(HttpStatus.OK);
 		}
 		return response;
