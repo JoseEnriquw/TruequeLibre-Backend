@@ -1,9 +1,9 @@
 package com.grupo3.truequelibre.responses.Oferta;
 
 public record OfertaResponse(
-		String Nombre,
+		String nombre,
 		String descripcion,
-		byte [] Imagen,
+		byte [] imagen,
 		Integer id_oferta		
 		) {
 	
