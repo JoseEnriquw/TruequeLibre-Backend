@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.grupo3.truequelibre.entity.Oferta;
+import com.grupo3.truequelibre.responses.Oferta.OfertaResponse;
 import com.grupo3.truequelibre.services.OfertaService.CreateOfertaRequest;
 import com.grupo3.truequelibre.services.OfertaService.FiltrarOfertaRequest;
 import com.grupo3.truequelibre.services.OfertaService.UpdateOfertaRequest;
@@ -17,6 +18,6 @@ public interface IOfertaServices {
 	Response<?> create(@Valid CreateOfertaRequest request);
 	Response<?> update(@Valid UpdateOfertaRequest request);
 	Response<?> delete(Integer id);
-	Response<List<Oferta>> filtrar(@Valid FiltrarOfertaRequest request);
+	Response<List<OfertaResponse>> filtrar(@Valid FiltrarOfertaRequest request);
 
 }
