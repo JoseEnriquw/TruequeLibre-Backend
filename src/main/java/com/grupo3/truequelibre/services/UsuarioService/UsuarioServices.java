@@ -77,7 +77,7 @@ public class UsuarioServices implements IUsuarioServices{
 			response.setStatus(HttpStatus.NOT_FOUND);
 		}
 		else {
-			Optional<Estado> estado= estadoDao.findById(Estados.Activo.ordinal()+1); 
+			 Optional<Estado> estado= estadoDao.findById(Estados.Activo.ordinal()+1); 
 			 SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		     String fecha = String.valueOf(request.fechaNacimiento());
 		     Date aux = null;
@@ -87,7 +87,7 @@ public class UsuarioServices implements IUsuarioServices{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			Persona persona = new Persona(request.dni(),request.nombre(),request.apellido(),request.direccion(),aux,request.telefono(),ubicacion.get());
+			Persona persona = new Persona(request.dni(),request.nombre(),request.apellido(),request.direccion(),request.fechaNacimiento(),request.telefono(),ubicacion.get());
 			Usuario usuario = new Usuario(request.mail(),request.contrasenia(),estado.get(),persona);
 			usuario = usuarioDao.save(usuario);		
 			response.setStatus(HttpStatus.CREATED);
