@@ -3,6 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+/sql-data
 
 ### STS ###
 .apt_generated
@@ -31,6 +32,7 @@ build/
 
 ### VS Code ###
 .vscode/
+/docker-compose.yml
+/pom.xml
 /mvnw
 /mvnw.cmd
-/pom.xml

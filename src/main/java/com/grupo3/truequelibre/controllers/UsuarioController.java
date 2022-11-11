@@ -32,7 +32,7 @@ public class UsuarioController extends ControllerBase{
 	public ResponseEntity<?> GetByEmail(@PathVariable String email){return Result(service.getByEmail(email));}
 	
 	@PostMapping()
-	public ResponseEntity<?> Create(@RequestBody CreateUsuarioRequest usuario) {return Result(service.create(usuario));}
+	public ResponseEntity<?> Create(@RequestBody CreateUsuarioRequest request) {return Result(service.create(request));}
 	
 	@PutMapping("/{email}")
 	public ResponseEntity<?> Update(@PathVariable String email,@RequestBody UpdateUsuarioVM usuario) {return Result(service.update(new UpdateUsuarioRequest(email,usuario.nombre(),usuario.apellido(),usuario.direccion(),usuario.telefono(),usuario.localidad(),usuario.fechaNacimiento(),usuario.contrasenia())));}
@@ -49,7 +49,12 @@ public class UsuarioController extends ControllerBase{
 	@PostMapping("/recuperar")
 	public ResponseEntity<?> VerificarRecuperar(@RequestBody RecuperarVerificarUsuarioRequest request){return Result(service.recuperarVerificar(request)); };
 	
+
+	@GetMapping("/cargarDropdown")
+	public ResponseEntity<?> getDataDropDown(){return Result(service.getDataDropdown());}
+
 	@GetMapping("/cargarImagenes")
 	public ResponseEntity<?> cargarImagenes(){return Result(service.cargarImagenes());}
+
 		
 }

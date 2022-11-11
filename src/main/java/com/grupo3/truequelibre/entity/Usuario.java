@@ -20,7 +20,7 @@ public class Usuario {
 	private Integer id;
 	@Column(unique=true)
 	private String mail;
-	@Column(unique=true)
+	@Column
 	private String contrasenia;
 	@ManyToOne (cascade= {CascadeType. ALL})
 	@JoinColumn(nullable=false)
