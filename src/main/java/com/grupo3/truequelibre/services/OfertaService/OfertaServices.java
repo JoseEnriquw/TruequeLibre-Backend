@@ -138,11 +138,10 @@ public class OfertaServices implements IOfertaServices {
 
 			List<OfertaResponse> content= new ArrayList<>();
 			for(Oferta item: listOfertas.get())
-			{
-				
+			{				
 				content.add(new OfertaResponse(item.getPublicacionOferante().getNombre(),item.getPublicacionOferante().getDescripcion(),item.getPublicacionOferante().getImagenes(),item.getId()));
 			}
-			response.setBody();
+			response.setBody(content);
 			response.setStatus(HttpStatus.OK);
 		}
 		return response;
