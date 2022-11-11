@@ -20,6 +20,7 @@ public class Categoria {
 	@Lob
 	@Column
 	private byte[] imagenes;
+
 	
 	public Categoria() {
 		
@@ -33,7 +34,7 @@ public class Categoria {
 	public Categoria(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -57,7 +58,7 @@ public class Categoria {
 	public void setImagenes(byte[] imagenes) {
 		this.imagenes = imagenes;
 	}
-	
+
 	
 	
 }

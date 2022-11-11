@@ -29,6 +29,7 @@ import com.grupo3.truequelibre.responses.Localidad.LocalidadResponse;
 import com.grupo3.truequelibre.responses.Publicacion.PublicacionDropdownResponse;
 import com.grupo3.truequelibre.responses.Publicacion.PublicacionResponse;
 import com.grupo3.truequelibre.responses.Usuario.UsuarioPublicacionResponse;
+import com.grupo3.truequelibre.tools.ConverterImagenes;
 import com.grupo3.truequelibre.tools.ErrorMessage;
 import com.grupo3.truequelibre.tools.Estados;
 import com.grupo3.truequelibre.tools.Response;
@@ -312,6 +313,21 @@ public class PublicacionServices implements IPublicacionServices {
 		
 		return response;
 		
+	}
+
+	@Override
+	public Response<List<Publicacion>> cargarImagenes() {
+		String[] imagenes = {"https://acortar.link/6esHDu","https://acortar.link/vTkrv2","https://acortar.link/Nkecos","https://acortar.link/PIFoRr","https://acortar.link/9ViqC5","https://acortar.link/yYQQTY","https://acortar.link/TH9ZmU","https://acortar.link/4kznRa","https://acortar.link/GuncSW","https://acortar.link/pS9jB1","https://acortar.link/zqZ3b5","https://acortar.link/pcTDns","https://acortar.link/16ALA1","https://acortar.link/HYMsby","https://acortar.link/gi7Lvr","https://acortar.link/ESDJBA","https://acortar.link/eSw4R2","https://acortar.link/S539qm","https://acortar.link/VCX1Ch","https://acortar.link/IkGjbr","https://acortar.link/zYc8Pp","https://acortar.link/yPDyK4","https://acortar.link/n40ZDU","https://acortar.link/S5dlHu","https://acortar.link/YuBxzl","https://acortar.link/ynEfix","https://acortar.link/5g3VKG","https://acortar.link/rXIgry","https://acortar.link/YVxZPW","https://acortar.link/kBaqFf","https://acortar.link/RVvpt3","https://acortar.link/WLTP0S","https://acortar.link/I1LdP5","https://acortar.link/CASu9m"};
+		Response<List<Publicacion>> response = new Response<>();
+		List<Publicacion> listaPublicaciones = publicacionDao.findAll();
+		for (int i=0;i<listaPublicaciones.size(); i++  ) {
+			byte[] img = ConverterImagenes.convertURLtoBytes(imagenes[i]);
+			listaPublicaciones.get(i).setImagenes(img);;
+		}
+		publicacionDao.saveAll(listaPublicaciones);
+		response.setBody(listaPublicaciones);
+		response.setStatus(HttpStatus.OK);
+		return response;
 	}
 	
 }

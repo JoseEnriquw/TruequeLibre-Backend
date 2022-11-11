@@ -24,6 +24,7 @@ import com.grupo3.truequelibre.entity.Usuario;
 import com.grupo3.truequelibre.interfaces.IUsuarioServices;
 import com.grupo3.truequelibre.responses.Localidad.LocalidadResponse;
 import com.grupo3.truequelibre.responses.Usuario.UsuarioDropdownResponse;
+import com.grupo3.truequelibre.tools.ConverterImagenes;
 import com.grupo3.truequelibre.tools.ErrorMessage;
 import com.grupo3.truequelibre.tools.Estados;
 import com.grupo3.truequelibre.tools.Mailer;
@@ -248,6 +249,21 @@ public class UsuarioServices implements IUsuarioServices{
 		
 		return response;
 		
+	}
+
+	@Override
+	public Response<?> cargarImagenes() {
+		String[] imagenes = {"https://acortar.link/QnpV8m","https://acortar.link/Qzv1vc","https://acortar.link/uJ52QU","https://acortar.link/OCj223","https://acortar.link/fF790R","https://acortar.link/VZS6Rb","https://acortar.link/Vekexx","https://acortar.link/xgMc1F","https://acortar.link/xVTvF3","https://acortar.link/yKbRzX","https://acortar.link/eVGdJM","https://acortar.link/HdiyiX","https://acortar.link/caW5Z5","https://acortar.link/BvUBGE","https://acortar.link/cd0I0l","https://acortar.link/6Uy4xi","https://acortar.link/9gjuNa","https://acortar.link/LcRTF1","https://acortar.link/eLLiZc","https://acortar.link/AwgnjM","https://acortar.link/JVtYob","https://acortar.link/NQUxrz","https://acortar.link/2LaIAW","https://acortar.link/na87kA","https://acortar.link/DWBg1g"};
+		Response<List<Usuario>> response = new Response<>();
+		List<Usuario> listaUsuarios = usuarioDao.findAll();
+		for (int i=0;i<listaUsuarios.size(); i++  ) {
+			byte[] img = ConverterImagenes.convertURLtoBytes(imagenes[i]);
+			listaUsuarios.get(i).getPersona().setImagenes(img);;
+		}
+		usuarioDao.saveAll(listaUsuarios);
+		response.setBody(listaUsuarios);
+		response.setStatus(HttpStatus.OK);
+		return response;
 	}
 
 }

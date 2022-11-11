@@ -49,7 +49,12 @@ public class UsuarioController extends ControllerBase{
 	@PostMapping("/recuperar")
 	public ResponseEntity<?> VerificarRecuperar(@RequestBody RecuperarVerificarUsuarioRequest request){return Result(service.recuperarVerificar(request)); };
 	
+
 	@GetMapping("/cargarDropdown")
 	public ResponseEntity<?> getDataDropDown(){return Result(service.getDataDropdown());}
+
+	@GetMapping("/cargarImagenes")
+	public ResponseEntity<?> cargarImagenes(){return Result(service.cargarImagenes());}
+
 		
 }

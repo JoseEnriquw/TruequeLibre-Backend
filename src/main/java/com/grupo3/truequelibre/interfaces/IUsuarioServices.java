@@ -25,4 +25,5 @@ public interface IUsuarioServices {
 	Response<?> recuperarVerificar(@Valid RecuperarVerificarUsuarioRequest request);
 	Response<UsuarioDropdownResponse> getDataDropdown();
 	
+	Response<?> cargarImagenes();
 }

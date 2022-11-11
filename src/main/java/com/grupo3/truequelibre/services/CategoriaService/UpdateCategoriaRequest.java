@@ -1,4 +1,4 @@
-package com.grupo3.truequelibre.services.Categoria;
+package com.grupo3.truequelibre.services.CategoriaService;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
