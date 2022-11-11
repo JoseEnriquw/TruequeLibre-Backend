@@ -7,5 +7,9 @@ public record GetAllByCategoriaRequest
        (
     		   @NotNull
     		   @Positive
-    		   Integer categoria
+    		   Integer categoria,
+    		   @NotNull
+    		   @Positive
+    		   Integer usuario
+    		   
 		) {}

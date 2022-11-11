@@ -11,5 +11,8 @@ public record GetAllByCategoriaFilterRequest
      		   Integer categoria,
      		   @NotNull
      		   @NotBlank
-               String search		
+               String search,	
+    		   @NotNull
+    		   @Positive
+    		   Integer usuario
         ) {}

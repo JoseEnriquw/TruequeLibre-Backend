@@ -24,6 +24,7 @@ import com.grupo3.truequelibre.entity.Usuario;
 import com.grupo3.truequelibre.interfaces.IUsuarioServices;
 import com.grupo3.truequelibre.responses.Localidad.LocalidadResponse;
 import com.grupo3.truequelibre.responses.Usuario.UsuarioDropdownResponse;
+import com.grupo3.truequelibre.responses.Usuario.UsuarioResponse;
 import com.grupo3.truequelibre.tools.ConverterImagenes;
 import com.grupo3.truequelibre.tools.ErrorMessage;
 import com.grupo3.truequelibre.tools.Estados;
@@ -81,13 +82,7 @@ public class UsuarioServices implements IUsuarioServices{
 			 Optional<Estado> estado= estadoDao.findById(Estados.Activo.ordinal()+1); 
 			 SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		     String fecha = String.valueOf(request.fechaNacimiento());
-		     Date aux = null;
-		     try {
-				aux = (Date) formato.parse(fecha);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	
 			Persona persona = new Persona(request.dni(),request.nombre(),request.apellido(),request.direccion(),request.fechaNacimiento(),request.telefono(),ubicacion.get());
 			Usuario usuario = new Usuario(request.mail(),request.contrasenia(),estado.get(),persona);
 			usuario = usuarioDao.save(usuario);		
@@ -152,8 +147,8 @@ public class UsuarioServices implements IUsuarioServices{
 	}
 
 	@Override
-	public Response<?> login(LoginUsuarioRequest request) {
-		Response<Usuario> response = new Response<>();
+	public Response<UsuarioResponse> login(LoginUsuarioRequest request) {
+		Response<UsuarioResponse> response = new Response<>();
 		Optional<Usuario> entity = usuarioDao.findByMailAndEstadoIdNot(request.email(),Estados.Inactivo.ordinal()+1);
 		if(entity.isEmpty()) {
 			response.AddError("#1", "email","The Email " + request.email() + " of usuario was not found in the database");
@@ -162,7 +157,7 @@ public class UsuarioServices implements IUsuarioServices{
 		else {
 			Usuario usuario = entity.get();
 			if(usuario.getContrasenia().equals(request.contrasenia())) {
-				response.setBody(usuario);
+				response.setBody(new UsuarioResponse(usuario.getId(),StringUtils.armarNombre(usuario),usuario.getMail(),usuario.getPersona().getImagenes()));
 				response.setStatus(HttpStatus.OK);
 			}
 			else {

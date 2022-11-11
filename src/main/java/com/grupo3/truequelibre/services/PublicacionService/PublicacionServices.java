@@ -54,9 +54,9 @@ public class PublicacionServices implements IPublicacionServices {
 	
 
 	@Override
-	public Response<List<PublicacionResponse>> getAll() {
+	public Response<List<PublicacionResponse>> getAll(GetAllPublicacionRequest request) {
 		List<PublicacionResponse> lista= new ArrayList<>();
-		List<Publicacion> result=(List<Publicacion>)publicacionDao.findByEstadoIdNot(Estados.Inactivo.ordinal()+1);
+		List<Publicacion> result=(List<Publicacion>)publicacionDao.findByEstadoIdNotAndUsuarioId(Estados.Inactivo.ordinal()+1,request.usuario());
 		for(Publicacion item: result) 
 		{
 			lista.add(new PublicacionResponse(item.getId(), new UsuarioPublicacionResponse(item.getUsuario().getId(),StringUtils.armarNombre(item.getUsuario()),item.getUsuario().getPersona().getImagenes())
@@ -249,7 +249,7 @@ public class PublicacionServices implements IPublicacionServices {
 			response.setStatus(HttpStatus.NOT_FOUND);
 		}else {
 			List<PublicacionResponse> lista= new ArrayList<>();
-			List<Publicacion> result= publicacionDao.findByCategoriaId(request.categoria());
+			List<Publicacion> result= publicacionDao.findByCategoriaIdAndUsuarioIdNot(request.categoria(),request.usuario());
 			for(Publicacion item: result) 
 			{
 				lista.add(new PublicacionResponse(item.getId(), new UsuarioPublicacionResponse(item.getUsuario().getId(),StringUtils.armarNombre(item.getUsuario()),item.getUsuario().getPersona().getImagenes())
@@ -272,7 +272,7 @@ public class PublicacionServices implements IPublicacionServices {
 			response.setStatus(HttpStatus.NOT_FOUND);
 		}else {
 			List<PublicacionResponse> lista= new ArrayList<>();
-			List<Publicacion> result= publicacionDao.findByCategoriaIdNombreIncompleto(request.categoria(),request.search());
+			List<Publicacion> result= publicacionDao.findByCategoriaIdNombreAndUsuarioIdNotIncompleto(request.categoria(),request.search(),request.usuario());
 			for(Publicacion item: result) 
 			{
 				lista.add(new PublicacionResponse(item.getId(), new UsuarioPublicacionResponse(item.getUsuario().getId(),StringUtils.armarNombre(item.getUsuario()),item.getUsuario().getPersona().getImagenes())
