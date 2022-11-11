@@ -28,6 +28,7 @@ import com.grupo3.truequelibre.responses.Condicion.CondicionResponse;
 import com.grupo3.truequelibre.responses.Localidad.LocalidadResponse;
 import com.grupo3.truequelibre.responses.Publicacion.PublicacionDropdownResponse;
 import com.grupo3.truequelibre.responses.Publicacion.PublicacionResponse;
+import com.grupo3.truequelibre.responses.Publicacion.PublicacionResponseEditar;
 import com.grupo3.truequelibre.responses.Usuario.UsuarioPublicacionResponse;
 import com.grupo3.truequelibre.tools.ConverterImagenes;
 import com.grupo3.truequelibre.tools.ErrorMessage;
@@ -67,16 +68,16 @@ public class PublicacionServices implements IPublicacionServices {
 	}
 
 	@Override
-	public Response<PublicacionResponse> getById(GetByIdRequest request) {
+	public Response<PublicacionResponseEditar> getById(GetByIdRequest request) {
 		Optional<Publicacion>entity=publicacionDao.findById(request.id());
-		 Response<PublicacionResponse> response= new Response<>();
+		 Response<PublicacionResponseEditar> response= new Response<>();
 		if(entity.isEmpty()) {
 			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,request.id(),"Publicacion"));		  
 			response.setStatus(HttpStatus.NOT_FOUND);
 		}else {
 		   Publicacion obj=entity.get();
-		   response.setBody(new PublicacionResponse(obj.getId(), new UsuarioPublicacionResponse(obj.getUsuario().getId(),StringUtils.armarNombre(obj.getUsuario()),obj.getUsuario().getPersona().getImagenes())
-					,obj.getNombre(),obj.getDescripcion(),obj.getCondicion().getDescripcion(),StringUtils.armarUbicacion(obj.getUbicacion()),StringUtils.armarUbicacion(obj.getUbicacionPretendida()),
+		   response.setBody(new PublicacionResponseEditar(obj.getId(), new UsuarioPublicacionResponse(obj.getUsuario().getId(),StringUtils.armarNombre(obj.getUsuario()),obj.getUsuario().getPersona().getImagenes())
+					,obj.getNombre(),obj.getDescripcion(),obj.getCategoria().getDescripcion(), obj.getCondicion().getDescripcion(),StringUtils.armarUbicacion(obj.getUbicacion()),StringUtils.armarUbicacion(obj.getUbicacionPretendida()),
 					obj.getCategoriaPretendida().getDescripcion(),obj.getImagenes()));
 		   response.setStatus(HttpStatus.OK);
 		}
