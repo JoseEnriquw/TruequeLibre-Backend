@@ -80,17 +80,13 @@ public class UsuarioServices implements IUsuarioServices{
 		}
 		else {
 			 Optional<Estado> estado= estadoDao.findById(Estados.Activo.ordinal()+1); 
-			 SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-		     String fecha = String.valueOf(request.fechaNacimiento());
 	
 			Persona persona = new Persona(request.dni(),request.nombre(),request.apellido(),request.direccion(),request.fechaNacimiento(),request.telefono(),ubicacion.get());
 			Usuario usuario = new Usuario(request.mail(),request.contrasenia(),estado.get(),persona);
 			usuario = usuarioDao.save(usuario);		
 			response.setStatus(HttpStatus.CREATED);
 		}
-		
-		
-		
+				
 		return response;
 	}
 
@@ -147,8 +143,8 @@ public class UsuarioServices implements IUsuarioServices{
 	}
 
 	@Override
-	public Response<UsuarioResponse> login(LoginUsuarioRequest request) {
-		Response<UsuarioResponse> response = new Response<>();
+	public Response<Integer> login(LoginUsuarioRequest request) {
+		Response<Integer> response = new Response<>();
 		Optional<Usuario> entity = usuarioDao.findByMailAndEstadoIdNot(request.email(),Estados.Inactivo.ordinal()+1);
 		if(entity.isEmpty()) {
 			response.AddError("#1", "email","The Email " + request.email() + " of usuario was not found in the database");
@@ -157,7 +153,7 @@ public class UsuarioServices implements IUsuarioServices{
 		else {
 			Usuario usuario = entity.get();
 			if(usuario.getContrasenia().equals(request.contrasenia())) {
-				response.setBody(new UsuarioResponse(usuario.getId(),StringUtils.armarNombre(usuario),usuario.getMail(),usuario.getPersona().getImagenes()));
+				response.setBody(usuario.getId());
 				response.setStatus(HttpStatus.OK);
 			}
 			else {
@@ -258,6 +254,25 @@ public class UsuarioServices implements IUsuarioServices{
 		usuarioDao.saveAll(listaUsuarios);
 		response.setBody(listaUsuarios);
 		response.setStatus(HttpStatus.OK);
+		return response;
+	}
+
+	@Override
+	public Response<UsuarioResponse> getById(Integer id) {
+
+		Response<UsuarioResponse> response = new Response<>();
+		Optional<Usuario> entity= usuarioDao.findById(id);
+		if(entity.isEmpty()) {
+			response.AddError("#1", "email"," ID " + id + " of usuario was not found in the database");
+			response.setStatus(HttpStatus.NOT_FOUND);
+		}
+		else
+		{
+		    Usuario usuario = entity.get();
+			response.setBody(new UsuarioResponse(usuario.getId(),StringUtils.armarNombre(usuario),usuario.getMail(),usuario.getPersona().getImagenes()));
+			response.setStatus(HttpStatus.OK);
+		}
+		
 		return response;
 	}
 

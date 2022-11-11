@@ -31,6 +31,9 @@ public class UsuarioController extends ControllerBase{
 	@GetMapping("/{email}")
 	public ResponseEntity<?> GetByEmail(@PathVariable String email){return Result(service.getByEmail(email));}
 	
+	@GetMapping("/getOne/{id}")
+	public ResponseEntity<?> Get(@PathVariable Integer id){return Result(service.getById(id));}
+	
 	@PostMapping()
 	public ResponseEntity<?> Create(@RequestBody CreateUsuarioRequest request) {return Result(service.create(request));}
 	
