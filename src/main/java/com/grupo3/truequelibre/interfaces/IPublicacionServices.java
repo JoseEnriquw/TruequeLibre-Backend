@@ -27,4 +27,5 @@ public interface IPublicacionServices {
 	
 	Response<PublicacionDropdownResponse> getDataDropdown();
 	Response<List<Publicacion>> cargarImagenes();
+	Response<PublicacionResponse> getByIdDetail(@Valid GetByIdRequest request);
 }

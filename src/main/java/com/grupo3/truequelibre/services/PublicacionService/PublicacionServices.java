@@ -330,5 +330,22 @@ public class PublicacionServices implements IPublicacionServices {
 		response.setStatus(HttpStatus.OK);
 		return response;
 	}
+
+	@Override
+	public Response<PublicacionResponse> getByIdDetail(@Valid GetByIdRequest request) {
+		Optional<Publicacion>entity=publicacionDao.findById(request.id());
+		 Response<PublicacionResponse> response= new Response<>();
+		if(entity.isEmpty()) {
+			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,request.id(),"Publicacion"));		  
+			response.setStatus(HttpStatus.NOT_FOUND);
+		}else {
+		   Publicacion item=entity.get();
+		   response.setBody(new PublicacionResponse(item.getId(), new UsuarioPublicacionResponse(item.getUsuario().getId(),StringUtils.armarNombre(item.getUsuario()),item.getUsuario().getPersona().getImagenes())
+					,item.getNombre(),item.getDescripcion(),item.getCondicion().getDescripcion(),StringUtils.armarUbicacion(item.getUbicacion()),StringUtils.armarUbicacion(item.getUbicacionPretendida()),
+					item.getCategoriaPretendida().getDescripcion(),item.getImagenes()));
+		   response.setStatus(HttpStatus.OK);
+		}
+		return response;
+	}
 	
 }
