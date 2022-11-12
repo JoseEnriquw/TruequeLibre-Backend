@@ -17,9 +17,11 @@ import com.grupo3.truequelibre.entity.PublicacionesOfertasID;
 import com.grupo3.truequelibre.entity.Usuario;
 import com.grupo3.truequelibre.interfaces.IOfertaServices;
 import com.grupo3.truequelibre.responses.Oferta.OfertaResponse;
+import com.grupo3.truequelibre.responses.Oferta.OfertaResponseNotificacion;
 import com.grupo3.truequelibre.tools.ErrorMessage;
 import com.grupo3.truequelibre.tools.Estados;
 import com.grupo3.truequelibre.tools.Response;
+import com.grupo3.truequelibre.tools.StringUtils;
 
 @Service
 @Validated
@@ -37,14 +39,24 @@ public class OfertaServices implements IOfertaServices {
 	}
 
 	@Override
-	public Response<Oferta> getById(Integer id) {
+	public Response<OfertaResponseNotificacion> getById(Integer id) {
 		Optional<Oferta>entity=ofertaDao.findById(id);
-		 Response<Oferta> response= new Response<>();
+		 Response<OfertaResponseNotificacion> response= new Response<>();
 		if(entity.isEmpty()) {
 			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,id,"Oferta"));		  
 			response.setStatus(HttpStatus.NOT_FOUND);
 		}else {
-		   response.setBody(entity.get());
+			Integer id_usuario_principal = entity.get().getPublicacionPrincipal().getUsuario().getId();
+			String nombre_usuario_principal = StringUtils.armarNombre(entity.get().getPublicacionPrincipal().getUsuario());
+			byte[] imagen_usuario_principal = entity.get().getPublicacionPrincipal().getUsuario().getPersona().getImagenes();
+			Integer id_usuario_ofertante = entity.get().getPublicacionOferante().getUsuario().getId();
+			String nombre_usuario_ofertante = StringUtils.armarNombre(entity.get().getPublicacionOferante().getUsuario());
+			byte[] imagen_usuario_ofertante = entity.get().getPublicacionOferante().getUsuario().getPersona().getImagenes();
+			OfertaResponseNotificacion rsp = new OfertaResponseNotificacion(
+					id_usuario_principal, nombre_usuario_principal,imagen_usuario_principal,id_usuario_ofertante,nombre_usuario_ofertante,imagen_usuario_ofertante
+					);
+		   response.setBody(rsp);
+		   
 		   response.setStatus(HttpStatus.OK);
 		}
 		return response;
