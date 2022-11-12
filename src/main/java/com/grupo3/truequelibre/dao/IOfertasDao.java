@@ -29,10 +29,14 @@ public interface IOfertasDao extends JpaRepository<Oferta,Integer>{
 	@Query(value="select * from oferta where id = :idOferta ", nativeQuery=true)
 	Optional<Oferta> findById(@Param("idOferta") Integer idOferta);
 
-	Optional<List<Oferta>> findByEstadoIdAndPublicacionPrincipal_Usuario(Integer idEstado,@Param("idUsuario") Usuario idUsuario);
+	Optional<List<Oferta>> findByEstadoIdAndPublicacionPrincipal_UsuarioId(Integer idEstado, Integer idUsuario);
 	Optional<List<Oferta>> findByEstadoIdAndPublicacionOferante_Usuario( Integer idEstado,@Param("idUsuarioOfertante") Usuario idUsuarioOfertante);
-	Optional<List<Oferta>> findByEstadoIdAndPublicacionOferante_UsuarioOrPublicacionPrincipal_Usuario(Integer idEstado,@Param("idUsuarioOfertante") Usuario idUsuarioOfertante,@Param("idUsuario") Usuario idUsuario);
+
+
+	@Query(value="select oft.* from truequelibredb.oferta oft left join publicacion p on p.id=oft.id_publicacion_principal left join estado es on es.id=oft.estado_id where p.usuario_id = :idUsuario and es.id = :idEstado union select oft.* from truequelibredb.oferta oft left join publicacion p on p.id=oft.id_publicacion_oferante left join estado es on es.id=oft.estado_id where p.usuario_id = :idUsuario and es.id = :idEstado",nativeQuery=true)
+	Optional<List<Oferta>> findByAll(Integer idEstado, Integer idUsuario);
 	
-	
+	@Query(value="SELECT oft.* FROM oferta oft join publicacion p on p.id= oft.id_publicacion_principal where  oft.id != :idOferta and ((oft.id_publicacion_oferante= :idPublicacionPrincipal or oft.id_publicacion_principal= :idPublicacionPrincipal ) or (oft.id_publicacion_oferante= :idPublicacionOfertante or oft.id_publicacion_principal= :idPublicacionOfertante))",nativeQuery=true)
+	Optional<List<Oferta>> findByAll(Integer idOferta, Integer idPublicacionPrincipal, Integer idPublicacionOfertante);
 
 }
