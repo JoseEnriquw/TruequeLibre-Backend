@@ -21,8 +21,7 @@ public class CalificacionUsuarios {
     @GeneratedValue(strategy=GenerationType.IDENTITY) 
 	private Integer id;
 	@Column
-	@Check(constraints = "estado >=1  AND estado <= 5")
-	private short estrellas;
+	private float estrellas;
 	@Column
 	private String comentario;
 	@Column
@@ -62,11 +61,11 @@ public class CalificacionUsuarios {
 		this.id = id;
 	}
 
-	public short getEstrellas() {
+	public float getEstrellas() {
 		return estrellas;
 	}
 
-	public void setEstrellas(short estrellas) {
+	public void setEstrellas(float estrellas) {
 		this.estrellas = estrellas;
 	}
 
