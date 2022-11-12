@@ -28,7 +28,6 @@ import com.grupo3.truequelibre.responses.Condicion.CondicionResponse;
 import com.grupo3.truequelibre.responses.Localidad.LocalidadResponse;
 import com.grupo3.truequelibre.responses.Publicacion.PublicacionDropdownResponse;
 import com.grupo3.truequelibre.responses.Publicacion.PublicacionResponse;
-import com.grupo3.truequelibre.responses.Publicacion.PublicacionResponseEditar;
 import com.grupo3.truequelibre.responses.Usuario.UsuarioPublicacionResponse;
 import com.grupo3.truequelibre.tools.ConverterImagenes;
 import com.grupo3.truequelibre.tools.ErrorMessage;
@@ -61,22 +60,22 @@ public class PublicacionServices implements IPublicacionServices {
 		for(Publicacion item: result) 
 		{
 			lista.add(new PublicacionResponse(item.getId(), new UsuarioPublicacionResponse(item.getUsuario().getId(),StringUtils.armarNombre(item.getUsuario()),item.getUsuario().getPersona().getImagenes())
-					,item.getNombre(),item.getDescripcion(),item.getCondicion().getDescripcion(),StringUtils.armarUbicacion(item.getUbicacion()),StringUtils.armarUbicacion(item.getUbicacionPretendida()),
+					,item.getNombre(),item.getDescripcion(),item.getCategoria().getDescripcion() ,item.getCondicion().getDescripcion(),StringUtils.armarUbicacion(item.getUbicacion()),StringUtils.armarUbicacion(item.getUbicacionPretendida()),
 					item.getCategoriaPretendida().getDescripcion(),item.getImagenes()));
 		}
 		return new Response<List<PublicacionResponse>>( lista,HttpStatus.OK);
 	}
 
 	@Override
-	public Response<PublicacionResponseEditar> getById(GetByIdRequest request) {
+	public Response<PublicacionResponse> getById(GetByIdRequest request) {
 		Optional<Publicacion>entity=publicacionDao.findById(request.id());
-		 Response<PublicacionResponseEditar> response= new Response<>();
+		 Response<PublicacionResponse> response= new Response<>();
 		if(entity.isEmpty()) {
 			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,request.id(),"Publicacion"));		  
 			response.setStatus(HttpStatus.NOT_FOUND);
 		}else {
 		   Publicacion obj=entity.get();
-		   response.setBody(new PublicacionResponseEditar(obj.getId(), new UsuarioPublicacionResponse(obj.getUsuario().getId(),StringUtils.armarNombre(obj.getUsuario()),obj.getUsuario().getPersona().getImagenes())
+		   response.setBody(new PublicacionResponse(obj.getId(), new UsuarioPublicacionResponse(obj.getUsuario().getId(),StringUtils.armarNombre(obj.getUsuario()),obj.getUsuario().getPersona().getImagenes())
 					,obj.getNombre(),obj.getDescripcion(),obj.getCategoria().getDescripcion(), obj.getCondicion().getDescripcion(),StringUtils.armarUbicacion(obj.getUbicacion()),StringUtils.armarUbicacion(obj.getUbicacionPretendida()),
 					obj.getCategoriaPretendida().getDescripcion(),obj.getImagenes()));
 		   response.setStatus(HttpStatus.OK);
@@ -254,7 +253,7 @@ public class PublicacionServices implements IPublicacionServices {
 			for(Publicacion item: result) 
 			{
 				lista.add(new PublicacionResponse(item.getId(), new UsuarioPublicacionResponse(item.getUsuario().getId(),StringUtils.armarNombre(item.getUsuario()),item.getUsuario().getPersona().getImagenes())
-						,item.getNombre(),item.getDescripcion(),item.getCondicion().getDescripcion(),StringUtils.armarUbicacion(item.getUbicacion()),StringUtils.armarUbicacion(item.getUbicacionPretendida()),
+						,item.getNombre(),item.getDescripcion(),item.getCategoria().getDescripcion(),item.getCondicion().getDescripcion(),StringUtils.armarUbicacion(item.getUbicacion()),StringUtils.armarUbicacion(item.getUbicacionPretendida()),
 						item.getCategoriaPretendida().getDescripcion(),item.getImagenes()));
 			}
 			
@@ -277,7 +276,7 @@ public class PublicacionServices implements IPublicacionServices {
 			for(Publicacion item: result) 
 			{
 				lista.add(new PublicacionResponse(item.getId(), new UsuarioPublicacionResponse(item.getUsuario().getId(),StringUtils.armarNombre(item.getUsuario()),item.getUsuario().getPersona().getImagenes())
-						,item.getNombre(),item.getDescripcion(),item.getCondicion().getDescripcion(),StringUtils.armarUbicacion(item.getUbicacion()),StringUtils.armarUbicacion(item.getUbicacionPretendida()),
+						,item.getNombre(),item.getDescripcion(),item.getCategoria().getDescripcion(),item.getCondicion().getDescripcion(),StringUtils.armarUbicacion(item.getUbicacion()),StringUtils.armarUbicacion(item.getUbicacionPretendida()),
 						item.getCategoriaPretendida().getDescripcion(),item.getImagenes()));
 			}
 			response.setBody(lista);
@@ -330,5 +329,6 @@ public class PublicacionServices implements IPublicacionServices {
 		response.setStatus(HttpStatus.OK);
 		return response;
 	}
+
 	
 }
