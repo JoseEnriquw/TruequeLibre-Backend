@@ -7,6 +7,7 @@ public record PublicacionResponse(
 	    UsuarioPublicacionResponse usuario,
 	    String nombre,
 	    String descripcion,
+	    String categoria,
 	    String condicion,
 	    String ubicacion,
 	    String ubicacionPretendida,

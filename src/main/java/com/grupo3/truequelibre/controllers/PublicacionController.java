@@ -31,9 +31,6 @@ public class PublicacionController extends ControllerBase {
 	@GetMapping("/getOne/{id}")
 	public ResponseEntity<?> Get(@PathVariable Integer id) {return Result( service.getById(new GetByIdRequest(id)));}
 	
-	@GetMapping("/getDetail/{id}")
-	public ResponseEntity<?> GetDetalle(@PathVariable Integer id) {return Result( service.getByIdDetail(new GetByIdRequest(id)));}
-	
 	@PostMapping("/categoria")
 	public ResponseEntity<?> GetAll(@RequestBody GetAllByCategoriaRequest request) {return Result(service.getAllByCategoria(request));}
 	
