@@ -329,6 +329,46 @@ public class PublicacionServices implements IPublicacionServices {
 		response.setStatus(HttpStatus.OK);
 		return response;
 	}
-
+	
+	@Override
+	public Response<List<PublicacionResponse>> getAllAdmin() {
+		List<PublicacionResponse> lista= new ArrayList<>();
+		List<Publicacion> result=(List<Publicacion>)publicacionDao.findByAll(Estados.EnRevision.ordinal()+1);
+		for(Publicacion item: result) 
+		{
+			lista.add(new PublicacionResponse(item.getId(), new UsuarioPublicacionResponse(item.getUsuario().getId(),StringUtils.armarNombre(item.getUsuario()),item.getUsuario().getPersona().getImagenes())
+					,item.getNombre(),item.getDescripcion(),item.getCategoria().getDescripcion() ,item.getCondicion().getDescripcion(),StringUtils.armarUbicacion(item.getUbicacion()),StringUtils.armarUbicacion(item.getUbicacionPretendida()),
+					item.getCategoriaPretendida().getDescripcion(),item.getImagenes()));
+		}
+		return new Response<List<PublicacionResponse>>( lista,HttpStatus.OK);
+	}
+	
+	@Override
+	public Response<?> updateAdmin(UpdatePublicacionAdminRequest request) {
+ 
+        Response<?> response= new Response<>();	
+		 
+		 ////Valida id PUBLICACION
+		 Optional<Publicacion> publicacion =publicacionDao.findById(request.id());
+		if(publicacion.isEmpty()) {
+			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,request.id(),"Publicacion"));		  
+			response.setStatus(HttpStatus.NOT_FOUND);
+		}else {
+			
+			Optional<Estado> estado = estadoDao.findById(request.idEstado());
+			if(estado.isEmpty()) {
+			response.AddError("#1", "idEstado", String.format(ErrorMessage.NOTFOUND,request.idEstado(),"Estado"));		  
+			response.setStatus(HttpStatus.NOT_FOUND);
+			} else {
+				 Publicacion entity=publicacion.get();
+				entity.setEstado(estado.get());
+				publicacionDao.save(entity);
+				response.setStatus(HttpStatus.OK);
+			}			
+				
+		}
+		
+		return response;
+	}
 	
 }
