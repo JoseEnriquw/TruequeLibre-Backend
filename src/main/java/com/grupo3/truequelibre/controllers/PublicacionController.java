@@ -16,7 +16,9 @@ import com.grupo3.truequelibre.services.PublicacionService.GetAllByCategoriaFilt
 import com.grupo3.truequelibre.services.PublicacionService.GetAllByCategoriaRequest;
 import com.grupo3.truequelibre.services.PublicacionService.GetAllPublicacionRequest;
 import com.grupo3.truequelibre.services.PublicacionService.GetByIdRequest;
+import com.grupo3.truequelibre.services.PublicacionService.UpdatePublicacionAdminRequest;
 import com.grupo3.truequelibre.services.PublicacionService.UpdatePublicacionRequest;
+import com.grupo3.truequelibre.viewmodels.UpdatePublicacionAdminVM;
 import com.grupo3.truequelibre.viewmodels.UpdatePublicacionVM;
 
 @RestController
@@ -64,4 +66,16 @@ public class PublicacionController extends ControllerBase {
 	
 	@GetMapping("/cargarImagenes")
 	public ResponseEntity<?> cargarImagenes(){return Result(service.cargarImagenes());}
+	
+	@GetMapping("/admin")
+	public ResponseEntity<?> GetAllAdmin(){return Result(service.getAllAdmin());}
+	
+	@PutMapping("/admin/{id}")
+	public ResponseEntity<?> UpdateAdmin(@PathVariable Integer id,@RequestBody UpdatePublicacionAdminVM body){
+		return Result( service.updateAdmin( new  UpdatePublicacionAdminRequest
+				(
+						id,						
+						body.idEstado()
+						
+				)));}
 }

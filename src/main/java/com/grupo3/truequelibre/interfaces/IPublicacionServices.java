@@ -11,6 +11,7 @@ import com.grupo3.truequelibre.services.PublicacionService.GetAllByCategoriaFilt
 import com.grupo3.truequelibre.services.PublicacionService.GetAllByCategoriaRequest;
 import com.grupo3.truequelibre.services.PublicacionService.GetAllPublicacionRequest;
 import com.grupo3.truequelibre.services.PublicacionService.GetByIdRequest;
+import com.grupo3.truequelibre.services.PublicacionService.UpdatePublicacionAdminRequest;
 import com.grupo3.truequelibre.services.PublicacionService.UpdatePublicacionRequest;
 import com.grupo3.truequelibre.tools.Response;
 
@@ -26,4 +27,6 @@ public interface IPublicacionServices {
 	
 	Response<PublicacionDropdownResponse> getDataDropdown();
 	Response<List<Publicacion>> cargarImagenes();
+	Response<List<PublicacionResponse>> getAllAdmin();
+	Response<?> updateAdmin(@Valid UpdatePublicacionAdminRequest request);
 }
