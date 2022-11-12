@@ -1,5 +1,6 @@
 package com.grupo3.truequelibre.services.CalificacionService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,9 +16,11 @@ import com.grupo3.truequelibre.dao.IUsuarioDao;
 import com.grupo3.truequelibre.entity.CalificacionUsuarios;
 import com.grupo3.truequelibre.entity.Usuario;
 import com.grupo3.truequelibre.interfaces.ICalificacionServices;
+import com.grupo3.truequelibre.responses.CalificacionUsuarios.CalificacionUsuariosResponse;
 import com.grupo3.truequelibre.tools.ErrorMessage;
 import com.grupo3.truequelibre.tools.Fecha;
 import com.grupo3.truequelibre.tools.Response;
+import com.grupo3.truequelibre.tools.StringUtils;
 
 @Service
 @Validated
@@ -31,9 +34,16 @@ public class CalificacionServices implements ICalificacionServices{
 	
 	
 	@Override
-	public Response<List<CalificacionUsuarios>> getAll() {
-		List<CalificacionUsuarios> listaCalificaciones = calificacionDao.findAll();
-		return new Response<>(listaCalificaciones,HttpStatus.OK);		
+	public Response<List<CalificacionUsuariosResponse>> getAll(Integer idUsuario) {
+		List<CalificacionUsuarios> listaCalificaciones = calificacionDao.findByUsuarioId(idUsuario);
+		List<CalificacionUsuariosResponse> content= new ArrayList<>();
+		for(CalificacionUsuarios item: listaCalificaciones)
+		{
+			content.add(new CalificacionUsuariosResponse(item.getUsuarioCalificador()==null? null: StringUtils.armarNombre(item.getUsuarioCalificador()),item.getUsuarioCalificador()==null? null: item.getUsuarioCalificador().getPersona().getImagenes()
+					,item.getComentario(),item.getEstrellas(),item.getFecha()));
+		}
+		
+		return new Response<>(content,HttpStatus.OK);		
 	}
 
 
