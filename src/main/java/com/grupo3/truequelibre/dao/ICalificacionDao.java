@@ -13,6 +13,7 @@ import com.grupo3.truequelibre.entity.CalificacionUsuarios;
 @Repository
 @Transactional
 public interface ICalificacionDao extends JpaRepository<CalificacionUsuarios,Integer>{
+	List<CalificacionUsuarios> findByUsuarioId(Integer usuario);
 	Optional<List<CalificacionUsuarios>> findByEstrellasGreaterThanEqual(short estrellas);
 	Optional<List<CalificacionUsuarios>> findByEstrellasLessThanEqual(short estrellas);
 }
