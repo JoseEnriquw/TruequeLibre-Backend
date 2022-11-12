@@ -79,6 +79,7 @@ public class OfertaServices implements IOfertaServices {
 	@Override
 	public Response<?> update(UpdateOfertaRequest request) {
 		Optional<Oferta>entity=ofertaDao.findById(request.id());
+		
 		 Response<Oferta> response= new Response<>();
 		if(entity.isEmpty()) {
 			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,request.id(),"Oferta"));		  
@@ -90,8 +91,23 @@ public class OfertaServices implements IOfertaServices {
 				response.setStatus(HttpStatus.NOT_FOUND);
 			}
 			else {
-				entity.get().setEstado(estado.get());
-				ofertaDao.save(entity.get());
+				Optional<Estado> estadoPublicacion = estadoDao.findById(Estados.Inactivo.ordinal()+1);
+				Optional<Estado> estadoRechazado = estadoDao.findById(Estados.Rechazado.ordinal()+1);
+				Oferta result=entity.get();
+				result.setEstado(estado.get());
+				result.getPublicacionOferante().setEstado(estadoPublicacion.get());
+			    result.getPublicacionPrincipal().setEstado(estadoPublicacion.get());
+			    
+			    //Integer idOferta, Integer idPublicacionPrincipal, Integer idPublicacionOfertante
+			    Optional<List<Oferta>> ofertasARechazar=ofertaDao.findByAll(result.getId(), result.getPublicacionPrincipal().getId(), result.getPublicacionOferante().getId());
+			    
+			    for(Oferta item : ofertasARechazar.get()) 
+			    {
+			    	item.setEstado(estadoRechazado.get());
+			    }
+			    
+			    ofertaDao.saveAll(ofertasARechazar.get());
+				ofertaDao.save(result);
 				response.setStatus(HttpStatus.OK);
 			}
 		}
@@ -122,11 +138,11 @@ public class OfertaServices implements IOfertaServices {
 		Optional<List<Oferta>>listOfertas=null;
 		 
 		switch(request.estado()) {
-			case "Recibidos":listOfertas=ofertaDao.findByEstadoIdAndPublicacionPrincipal_Usuario(Estados.Ofertado.ordinal()+1,new Usuario(request.id_usuario()));
+			case "Recibidos":listOfertas=ofertaDao.findByEstadoIdAndPublicacionPrincipal_UsuarioId(Estados.Ofertado.ordinal()+1,request.id_usuario());
 			break;
 			case "Enviados":listOfertas=ofertaDao.findByEstadoIdAndPublicacionOferante_Usuario(Estados.Ofertado.ordinal()+1,new Usuario(request.id_usuario()));
 			break;
-			case "Aceptados":listOfertas=ofertaDao.findByEstadoIdAndPublicacionOferante_UsuarioOrPublicacionPrincipal_Usuario(Estados.Aceptado.ordinal()+1,new Usuario(request.id_usuario()),new Usuario(request.id_usuario()));
+			case "Aceptados":listOfertas=ofertaDao.findByAll(Estados.Aceptado.ordinal()+1,request.id_usuario());
 			break;
 		}
 		Response<List<OfertaResponse>> response= new Response<>();
@@ -141,8 +157,7 @@ public class OfertaServices implements IOfertaServices {
 			
 			for(Oferta item: listOfertas.get())
 			{				
-				
-			      content.add(new OfertaResponse(
+				content.add(new OfertaResponse(
 			    		   item.getPublicacionOferante().getNombre(),
 			    		  item.getPublicacionOferante().getDescripcion(),
 			    		  item.getPublicacionOferante().getImagenes(),
