@@ -14,8 +14,7 @@
 	<name>truequelibre</name>
 	<description>Este es el backend de Trueque Libre</description>
 	<properties>
-	    <maven.compiler.source>16</maven.compiler.source>
-	    <maven.compiler.target>16</maven.compiler.target>
+		<java.version>16</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
