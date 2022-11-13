@@ -24,8 +24,8 @@ public class SeguridadUsuario {
     @Basic(optional = false)
     private LocalDateTime expira;
 	
-	@ManyToOne
-	@JoinColumn(name="usuario_id", referencedColumnName="id")
+	@ManyToOne(cascade= {CascadeType. ALL})
+	@JoinColumn
 	private Usuario usuario;
 	
 	@ManyToOne (cascade= {CascadeType. ALL})
