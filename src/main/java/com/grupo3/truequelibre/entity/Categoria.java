@@ -19,10 +19,9 @@ public class Categoria {
 	private Integer id;
 	@Column
 	private String descripcion;
+	@Lob
 	@Type(type="org.hibernate.type.BinaryType")
-	@Column
 	private byte[] imagenes;
-
 	
 	public Categoria() {
 		

@@ -35,8 +35,9 @@ public class Persona {
 	private Localidad localidad;
     @OneToOne(mappedBy = "persona")
     private Usuario usuario;
+    
+    @Lob
     @Type(type="org.hibernate.type.BinaryType")
-	@Column
 	private byte[] imagenes;
 
 	public Persona() {

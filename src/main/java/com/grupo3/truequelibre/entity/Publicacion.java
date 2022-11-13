@@ -37,8 +37,8 @@ public class Publicacion {
 	@ManyToOne (cascade= {CascadeType. ALL})
 	@JoinColumn
 	private Categoria categoriaPretendida;
+	@Lob
 	@Type(type="org.hibernate.type.BinaryType")
-	@Column
 	private byte[] imagenes;
 	
 	@ManyToOne (cascade= {CascadeType. ALL})
