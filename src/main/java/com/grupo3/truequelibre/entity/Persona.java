@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -34,7 +35,7 @@ public class Persona {
 	private Localidad localidad;
     @OneToOne(mappedBy = "persona")
     private Usuario usuario;
-	@Lob
+    @Type(type="org.hibernate.type.BinaryType")
 	@Column
 	private byte[] imagenes;
 

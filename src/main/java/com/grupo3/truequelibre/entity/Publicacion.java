@@ -11,6 +11,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name="publicacion")
 public class Publicacion {
@@ -35,7 +37,7 @@ public class Publicacion {
 	@ManyToOne (cascade= {CascadeType. ALL})
 	@JoinColumn
 	private Categoria categoriaPretendida;
-	@Lob
+	@Type(type="org.hibernate.type.BinaryType")
 	@Column
 	private byte[] imagenes;
 	

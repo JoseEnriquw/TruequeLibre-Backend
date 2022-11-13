@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name="categoria")
 public class Categoria {
@@ -17,7 +19,7 @@ public class Categoria {
 	private Integer id;
 	@Column
 	private String descripcion;
-	@Lob
+	@Type(type="org.hibernate.type.BinaryType")
 	@Column
 	private byte[] imagenes;
 
