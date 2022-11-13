@@ -7,6 +7,7 @@ public record OfertaResponse(
 		String nombre_principal,
 		String descripcion_principal,
 		byte [] imagen_principal,
+		Integer estado_id,
 		Integer id
 		) {
 	

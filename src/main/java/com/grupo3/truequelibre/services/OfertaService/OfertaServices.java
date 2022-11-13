@@ -15,7 +15,9 @@ import com.grupo3.truequelibre.entity.Oferta;
 import com.grupo3.truequelibre.entity.Publicacion;
 import com.grupo3.truequelibre.entity.PublicacionesOfertasID;
 import com.grupo3.truequelibre.entity.Usuario;
+import com.grupo3.truequelibre.entity.finalizar_trueque;
 import com.grupo3.truequelibre.interfaces.IOfertaServices;
+import com.grupo3.truequelibre.responses.Oferta.FinalizarTruequeResponse;
 import com.grupo3.truequelibre.responses.Oferta.OfertaResponse;
 import com.grupo3.truequelibre.responses.Oferta.OfertaResponseNotificacion;
 import com.grupo3.truequelibre.tools.ErrorMessage;
@@ -154,7 +156,7 @@ public class OfertaServices implements IOfertaServices {
 			break;
 			case "Enviados":listOfertas=ofertaDao.findByEstadoIdAndPublicacionOferante_Usuario(Estados.Ofertado.ordinal()+1,new Usuario(request.id_usuario()));
 			break;
-			case "Aceptados":listOfertas=ofertaDao.findByAll(Estados.Aceptado.ordinal()+1,request.id_usuario());
+			case "Aceptados":listOfertas=ofertaDao.findByAllOf(Estados.Aceptado.ordinal()+1,Estados.Propiestafinalizado1.ordinal()+1,request.id_usuario());
 			break;
 		}
 		Response<List<OfertaResponse>> response= new Response<>();
@@ -176,6 +178,7 @@ public class OfertaServices implements IOfertaServices {
 			    		  item.getPublicacionPrincipal().getNombre(),
 			    		  item.getPublicacionPrincipal().getDescripcion(),
 			    		  item.getPublicacionPrincipal().getImagenes(),
+			    		  item.getEstado().getId(),
 			    		  item.getId() 
 			    		  ));
 			}
@@ -185,7 +188,42 @@ public class OfertaServices implements IOfertaServices {
 		return response;
 	}
 
-	
+	@Override
+	public Response<List<OfertaResponse>> finalizarTrueque(FinalizarTruequeResponse request) {
+		Optional<List<finalizar_trueque>> listOfertas=null;
+		 
+		
+		listOfertas=ofertaDao.finByAll(request.id_usuario());
+			
+		}
+		Response<List<OfertaResponse>> response= new Response<>();
+		if (listOfertas == null || listOfertas.isEmpty()) {
+			response.AddError("#1", "","No ofertas were found with this filters");		  
+			response.setStatus(HttpStatus.NOT_FOUND);
+		}
+		else {
+
+			List<OfertaResponse> content= new ArrayList<>();
+		
+			
+			for(Oferta item: listOfertas.get())
+			{				
+				content.add(new OfertaResponse(
+			    		  item.getPublicacionOferante().getNombre(),
+			    		  item.getPublicacionOferante().getDescripcion(),
+			    		  item.getPublicacionOferante().getImagenes(),
+			    		  item.getPublicacionPrincipal().getNombre(),
+			    		  item.getPublicacionPrincipal().getDescripcion(),
+			    		  item.getPublicacionPrincipal().getImagenes(),
+			    		  item.getEstado().getId(),
+			    		  item.getId() 
+			    		  ));
+			}
+			response.setBody(content);
+			response.setStatus(HttpStatus.OK);
+		}
+		return response;
+	}
 
 	
 
