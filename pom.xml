@@ -14,7 +14,8 @@
 	<name>truequelibre</name>
 	<description>Este es el backend de Trueque Libre</description>
 	<properties>
-		<java.version>16</java.version>
+	    <maven.compiler.source>16</maven.compiler.source>
+	    <maven.compiler.target>16</maven.compiler.target>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -34,11 +35,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
-			<scope>runtime</scope>
+		    <groupId>org.postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		    <scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -61,14 +61,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			 <plugin>
-			   <groupId>org.apache.maven.plugins</groupId>
-			   <artifactId>maven-compiler-plugin</artifactId>
-			   <configuration>
-			      <source>16</source>
-			      <target>16</target>
-			      </configuration>
-			  </plugin>
 		</plugins>
 	</build>
 
