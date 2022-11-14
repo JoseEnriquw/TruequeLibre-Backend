@@ -9,6 +9,7 @@ public record OfertaResponse(
 		byte [] imagen_principal,
 		Integer estado_id,
 		Integer id_usuario_principal,
+		Integer id_usuario_ofertante,
 		boolean usuario_principal_acepto, 
 		boolean usuario_ofertante_acepto,
 		Integer id

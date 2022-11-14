@@ -181,6 +181,7 @@ public class OfertaServices implements IOfertaServices {
 			    		  item.getPublicacionPrincipal().getImagenes(),			    		  
 			    		  item.getEstado().getId(),
 			    		  item.getPublicacionPrincipal().getUsuario().getId(),
+			    		  item.getPublicacionOferante().getUsuario().getId(),
 			    		  item.isUsuario_principal_acepto(),
 			    		  item.isUsuario_ofertante_acepto(),
 			    		  item.getId() 
