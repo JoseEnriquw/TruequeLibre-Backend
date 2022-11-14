@@ -7,6 +7,10 @@ public record OfertaResponse(
 		String nombre_principal,
 		String descripcion_principal,
 		byte [] imagen_principal,
+		Integer estado_id,
+		Integer id_usuario_principal,
+		boolean usuario_principal_acepto, 
+		boolean usuario_ofertante_acepto,
 		Integer id
 		) {
 	
