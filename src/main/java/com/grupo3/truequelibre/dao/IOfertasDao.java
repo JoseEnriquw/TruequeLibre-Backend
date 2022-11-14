@@ -13,11 +13,6 @@ import org.springframework.stereotype.Repository;
 
 
 import org.springframework.data.jpa.repository.Query;
-
-
-
-import com.grupo3.truequelibre.entity.Estado;
-import com.grupo3.truequelibre.entity.FinalizarTrueque;
 import com.grupo3.truequelibre.entity.Oferta;
 import com.grupo3.truequelibre.entity.Usuario;
 

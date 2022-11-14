@@ -8,11 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import com.grupo3.truequelibre.dao.IEstadoDao;
-import com.grupo3.truequelibre.dao.IFinalizarTruequeDao;
 import com.grupo3.truequelibre.dao.IOfertasDao;
 import com.grupo3.truequelibre.dao.IPublicacionDao;
 import com.grupo3.truequelibre.entity.Estado;
-import com.grupo3.truequelibre.entity.FinalizarTrueque;
 import com.grupo3.truequelibre.entity.Oferta;
 import com.grupo3.truequelibre.entity.Publicacion;
 import com.grupo3.truequelibre.entity.PublicacionesOfertasID;
@@ -192,8 +190,46 @@ public class OfertaServices implements IOfertaServices {
 		return response;
 	}
 
-	
+	@Override
+	public Response<FinalizarTruequeResponse> GetByIdEstadoOferta(Integer id) {
+		Optional<Oferta>entity=ofertaDao.findById(id);
+		 Response<FinalizarTruequeResponse> response= new Response<>();
+		if(entity.isEmpty()) {
+			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,id,"Oferta"));		  
+			response.setStatus(HttpStatus.NOT_FOUND);
+		}else {
 
+			Oferta result=entity.get();
+			FinalizarTruequeResponse content= new FinalizarTruequeResponse(
+					result.getId(),
+					result.isUsuario_principal_acepto(),
+					result.isUsuario_ofertante_acepto());
+			
+			response.setBody(content);
+			response.setStatus(HttpStatus.OK);
+		}
+		return response;
+	}
+
+	@Override
+	public Response<?> updateFinalizarTrueque(UpdateFinalizarRequest request) {
+		
+		Optional<Oferta>entity=ofertaDao.findById(request.id());
+		 Response<FinalizarTruequeResponse> response= new Response<>();
+		if(entity.isEmpty()) {
+			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,request.id(),"Oferta"));		  
+			response.setStatus(HttpStatus.NOT_FOUND);
+		}else {
+				Oferta result=entity.get();
+				result.setUsuario_principal_acepto(request.usuario_principal_acepto());
+				result.setUsuario_ofertante_acepto(request.usuario_ofertante_acepto());	   
+			
+				ofertaDao.save(result);
+				response.setStatus(HttpStatus.OK);
+			}
+		
+		return response;
+	}
 	
 
 }

@@ -1,13 +1,12 @@
-package com.grupo3.truequelibre.services.FinalizarTruequeService;
-
+package com.grupo3.truequelibre.services.OfertaService;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-public record CreateFinalizarTruequeRequest(
+public record UpdateFinalizarRequest(
 		@NotNull
 		  @Positive
-		Integer idOferta,
+		Integer id,
 		@NotNull		
 		boolean usuario_principal_acepto,
 		@NotNull		
