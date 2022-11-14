@@ -33,15 +33,11 @@ public class Oferta {
 	@JoinColumn(nullable=false)
 	private Estado estado;
 	
-	@Column(nullable=false)
+	@Column(columnDefinition="boolean DEFAULT false")
 	private boolean usuario_principal_acepto;
 	
-	@Column(nullable=false)
+	@Column(columnDefinition="boolean DEFAULT false")
 	private boolean usuario_ofertante_acepto;
-	
-
-
-
 
 	public Oferta(Integer idOferta, PublicacionesOfertasID id, Publicacion publicacionPrincipal,
 			Publicacion publicacionOferante, Estado estado) {
