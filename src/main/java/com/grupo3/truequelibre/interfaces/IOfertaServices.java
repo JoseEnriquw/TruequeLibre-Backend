@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.grupo3.truequelibre.entity.FinalizarTrueque;
 import com.grupo3.truequelibre.entity.Oferta;
 import com.grupo3.truequelibre.responses.Oferta.FinalizarTruequeResponse;
 import com.grupo3.truequelibre.responses.Oferta.OfertaResponse;
 import com.grupo3.truequelibre.responses.Oferta.OfertaResponseNotificacion;
+import com.grupo3.truequelibre.services.FinalizarTruequeService.CreateFinalizarTruequeRequest;
 import com.grupo3.truequelibre.services.OfertaService.CreateOfertaRequest;
 import com.grupo3.truequelibre.services.OfertaService.FiltrarOfertaRequest;
 import com.grupo3.truequelibre.services.OfertaService.UpdateOfertaRequest;
@@ -21,6 +23,6 @@ public interface IOfertaServices {
 	Response<?> update(@Valid UpdateOfertaRequest request);
 	Response<?> delete(Integer id);
 	Response<List<OfertaResponse>> filtrar(@Valid FiltrarOfertaRequest request);
-	Response<List<OfertaResponse>> finalizarTrueque(FinalizarTruequeResponse request);
+	
 
 }
