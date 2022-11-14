@@ -15,7 +15,9 @@ import com.grupo3.truequelibre.interfaces.IOfertaServices;
 
 import com.grupo3.truequelibre.services.OfertaService.CreateOfertaRequest;
 import com.grupo3.truequelibre.services.OfertaService.FiltrarOfertaRequest;
+import com.grupo3.truequelibre.services.OfertaService.UpdateFinalizarRequest;
 import com.grupo3.truequelibre.services.OfertaService.UpdateOfertaRequest;
+import com.grupo3.truequelibre.viewmodels.UpdateFinalizarVM;
 import com.grupo3.truequelibre.viewmodels.UpdateOfertaVM;
 
 @RestController
@@ -43,5 +45,10 @@ public class OfertaController extends ControllerBase {
 	@PostMapping("/filtrar")
 	public ResponseEntity<?> Filtrar(@RequestBody FiltrarOfertaRequest filtros) {return Result(service.filtrar(filtros));}
 	
+	@GetMapping("/estado/{id}")
+	public ResponseEntity<?> GetBy(@PathVariable Integer id_oferta){return Result(service.GetByIdEstadoOferta(id_oferta));}
 	
+	@PutMapping("/estado/{id}")
+	public ResponseEntity<?> Update(@PathVariable Integer id,@RequestBody UpdateFinalizarVM request){return Result(service.updateFinalizarTrueque(
+			new UpdateFinalizarRequest(id, request.usuario_principal_acepto(),request.usuario_ofertante_acepto())));}
 }

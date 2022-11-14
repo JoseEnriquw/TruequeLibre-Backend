@@ -7,5 +7,8 @@ public enum Estados {
       Aceptado,
       Rechazado,
       EnRevision,
-      Aprobado
+      Aprobado,
+      Propiestafinalizado1,
+      Propiestafinalizado2
+
 }
