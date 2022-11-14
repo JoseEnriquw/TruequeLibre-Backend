@@ -56,7 +56,7 @@ public class PublicacionServices implements IPublicacionServices {
 	@Override
 	public Response<List<PublicacionResponse>> getAll(GetAllPublicacionRequest request) {
 		List<PublicacionResponse> lista= new ArrayList<>();
-		List<Publicacion> result=(List<Publicacion>)publicacionDao.findByEstadoIdNotAndUsuarioId(Estados.Inactivo.ordinal()+1,request.usuario());
+		List<Publicacion> result=(List<Publicacion>)publicacionDao.findByUser(request.usuario());
 		for(Publicacion item: result) 
 		{
 			lista.add(new PublicacionResponse(item.getId(), new UsuarioPublicacionResponse(item.getUsuario().getId(),StringUtils.armarNombre(item.getUsuario()),item.getUsuario().getPersona().getImagenes())
@@ -249,7 +249,7 @@ public class PublicacionServices implements IPublicacionServices {
 			response.setStatus(HttpStatus.NOT_FOUND);
 		}else {
 			List<PublicacionResponse> lista= new ArrayList<>();
-			List<Publicacion> result= publicacionDao.findByEstadoIdNotAndCategoriaIdAndUsuarioIdNot(Estados.Inactivo.ordinal()+1,request.categoria(),request.usuario());
+			List<Publicacion> result= publicacionDao.findByCategoria(request.categoria(),request.usuario());
 			for(Publicacion item: result) 
 			{
 				lista.add(new PublicacionResponse(item.getId(), new UsuarioPublicacionResponse(item.getUsuario().getId(),StringUtils.armarNombre(item.getUsuario()),item.getUsuario().getPersona().getImagenes())
