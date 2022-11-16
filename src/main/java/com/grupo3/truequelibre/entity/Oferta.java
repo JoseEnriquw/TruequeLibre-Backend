@@ -33,10 +33,10 @@ public class Oferta {
 	@JoinColumn(nullable=false)
 	private Estado estado;
 	
-	@Column(nullable=false)
+    @Column(nullable=false,columnDefinition="bit default 0")
 	private boolean usuario_principal_acepto;
 	
-	@Column(nullable=false)
+    @Column(nullable=false,columnDefinition="bit default 0")
 	private boolean usuario_ofertante_acepto;
 	
 
