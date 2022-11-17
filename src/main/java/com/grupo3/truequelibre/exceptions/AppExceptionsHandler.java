@@ -44,9 +44,10 @@ public class AppExceptionsHandler{
 	
 	@ExceptionHandler(value = {Exception.class})
 	 public ResponseEntity<?> handleAnyException(Exception ex, WebRequest request) {
-		 
-	     return new ResponseEntity<>(
-	            ex, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+		 List<Error> errors = new ArrayList<>();
+		 errors.add(new Error("500","query","Causa:"+ex.getCause().getMessage()+" \n Mensaje"+ex.getMessage()));
+	     return new ResponseEntity<List<Error>>(
+	            errors, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 	 }
 	
 }
