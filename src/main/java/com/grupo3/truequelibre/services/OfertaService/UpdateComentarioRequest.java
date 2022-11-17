@@ -3,14 +3,14 @@ package com.grupo3.truequelibre.services.OfertaService;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-public record UpdateFinalizarRequest(
+public record UpdateComentarioRequest(
 		@NotNull
 		@Positive
 		Integer id,
 		@NotNull		
-		boolean usuario_principal_acepto,
+		boolean usuario_principal_califico,
 		@NotNull		
-		boolean usuario_ofertante_acepto
+		boolean usuario_ofertante_califico
 		) {
 
 }

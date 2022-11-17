@@ -17,6 +17,7 @@ import com.grupo3.truequelibre.entity.PublicacionesOfertasID;
 import com.grupo3.truequelibre.entity.Usuario;
 
 import com.grupo3.truequelibre.interfaces.IOfertaServices;
+import com.grupo3.truequelibre.responses.Oferta.CalificarTruequeRequest;
 import com.grupo3.truequelibre.responses.Oferta.FinalizarTruequeResponse;
 import com.grupo3.truequelibre.responses.Oferta.OfertaResponse;
 import com.grupo3.truequelibre.responses.Oferta.OfertaResponseNotificacion;
@@ -181,8 +182,11 @@ public class OfertaServices implements IOfertaServices {
 			    		  item.getPublicacionPrincipal().getImagenes(),			    		  
 			    		  item.getEstado().getId(),
 			    		  item.getPublicacionPrincipal().getUsuario().getId(),
+			    		  item.getPublicacionOferante().getUsuario().getId(),
 			    		  item.isUsuario_principal_acepto(),
 			    		  item.isUsuario_ofertante_acepto(),
+			    		  item.isUsuario_principal_califico(),
+			    		  item.isUsuario_ofertante_califico(),
 			    		  item.getId() 
 			    		  ));
 			}
@@ -225,6 +229,31 @@ public class OfertaServices implements IOfertaServices {
 				Oferta result=entity.get();
 				result.setUsuario_principal_acepto(request.usuario_principal_acepto());
 				result.setUsuario_ofertante_acepto(request.usuario_ofertante_acepto());	   
+			
+				ofertaDao.save(result);
+				response.setStatus(HttpStatus.OK);
+			}
+		
+		return response;
+	}
+	
+	
+	@Override
+	public Response<?> updateComentarioTrueque(UpdateComentarioRequest request) {
+		
+		Optional<Oferta>entity=ofertaDao.findById(request.id());
+		 Response<CalificarTruequeRequest> response= new Response<>();
+		if(entity.isEmpty()) {
+			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,request.id(),"Oferta"));		  
+			response.setStatus(HttpStatus.NOT_FOUND);
+		}else {
+				Oferta result=entity.get();
+				if(entity.get().isUsuario_principal_califico()!= true) {
+					result.setUsuario_principal_califico (request.usuario_principal_califico());
+				}
+				if(entity.get().isUsuario_ofertante_califico() != true) {
+					result.setUsuario_ofertante_califico(request.usuario_ofertante_califico());	  
+				}			 
 			
 				ofertaDao.save(result);
 				response.setStatus(HttpStatus.OK);
