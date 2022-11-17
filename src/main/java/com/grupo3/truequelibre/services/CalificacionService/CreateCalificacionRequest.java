@@ -8,7 +8,7 @@ public record CreateCalificacionRequest(
 		@NotNull
 		Integer idUsuarioCalificado,
 		@NotNull
-		short estrellas,
+		float estrellas,
 		String comentario
 		) {
 

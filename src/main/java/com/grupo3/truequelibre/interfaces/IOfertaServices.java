@@ -10,6 +10,7 @@ import com.grupo3.truequelibre.responses.Oferta.OfertaResponse;
 import com.grupo3.truequelibre.responses.Oferta.OfertaResponseNotificacion;
 import com.grupo3.truequelibre.services.OfertaService.CreateOfertaRequest;
 import com.grupo3.truequelibre.services.OfertaService.FiltrarOfertaRequest;
+import com.grupo3.truequelibre.services.OfertaService.UpdateComentarioRequest;
 import com.grupo3.truequelibre.services.OfertaService.UpdateFinalizarRequest;
 import com.grupo3.truequelibre.services.OfertaService.UpdateOfertaRequest;
 import com.grupo3.truequelibre.tools.Response;
@@ -24,5 +25,6 @@ public interface IOfertaServices {
 	Response<List<OfertaResponse>> filtrar(@Valid FiltrarOfertaRequest request);
 	Response<FinalizarTruequeResponse> GetByIdEstadoOferta(Integer id);
 	Response<?> updateFinalizarTrueque(@Valid UpdateFinalizarRequest request);
+	Response<?> updateComentarioTrueque(@Valid UpdateComentarioRequest request);
 
 }

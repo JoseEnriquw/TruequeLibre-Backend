@@ -9,6 +9,7 @@ public enum Estados {
       EnRevision,
       Aprobado,
       Propiestafinalizado1,
-      Propiestafinalizado2
+      CalificoPrincipal,
+      CalificoOfertante
 
 }

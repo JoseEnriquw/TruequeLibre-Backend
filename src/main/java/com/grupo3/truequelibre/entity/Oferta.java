@@ -33,13 +33,43 @@ public class Oferta {
 	@JoinColumn(nullable=false)
 	private Estado estado;
 	
-	@Column(nullable=false)
+    @Column(nullable=false,columnDefinition="bit default 0")
 	private boolean usuario_principal_acepto;
 	
-	@Column(nullable=false)
+    @Column(nullable=false,columnDefinition="bit default 0")
 	private boolean usuario_ofertante_acepto;
+    
+    @Column(nullable=false,columnDefinition="bit default 0")
+  	private boolean usuario_principal_califico;
+  	
+     @Column(nullable=false,columnDefinition="bit default 0")
+  	private boolean usuario_ofertante_califico;
 	
 
+
+
+
+	public boolean isUsuario_principal_califico() {
+		return usuario_principal_califico;
+	}
+
+
+
+	public void setUsuario_principal_califico(boolean usuario_principal_califico) {
+		this.usuario_principal_califico = usuario_principal_califico;
+	}
+
+
+
+	public boolean isUsuario_ofertante_califico() {
+		return usuario_ofertante_califico;
+	}
+
+
+
+	public void setUsuario_ofertante_califico(boolean usuario_ofertante_califico) {
+		this.usuario_ofertante_califico = usuario_ofertante_califico;
+	}
 
 
 
@@ -55,6 +85,23 @@ public class Oferta {
 	
 	
 	
+	public Oferta(Integer id, PublicacionesOfertasID idPublicacionesOfertas, Publicacion publicacionPrincipal,
+			Publicacion publicacionOferante, Estado estado, boolean usuario_principal_acepto,
+			boolean usuario_ofertante_acepto, boolean usuario_principal_califico, boolean usuario_ofertante_califico) {
+		super();
+		this.id = id;
+		this.idPublicacionesOfertas = idPublicacionesOfertas;
+		this.publicacionPrincipal = publicacionPrincipal;
+		this.publicacionOferante = publicacionOferante;
+		this.estado = estado;
+		this.usuario_principal_acepto = usuario_principal_acepto;
+		this.usuario_ofertante_acepto = usuario_ofertante_acepto;
+		this.usuario_principal_califico = usuario_principal_califico;
+		this.usuario_ofertante_califico = usuario_ofertante_califico;
+	}
+
+
+
 	public Oferta(PublicacionesOfertasID idPublicacionesOfertas, Estado estado) {
 		super();
 		this.idPublicacionesOfertas = idPublicacionesOfertas;

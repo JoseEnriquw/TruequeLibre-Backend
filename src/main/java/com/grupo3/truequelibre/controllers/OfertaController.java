@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo3.truequelibre.interfaces.IOfertaServices;
-
+import com.grupo3.truequelibre.responses.Oferta.CalificarTruequeRequest;
 import com.grupo3.truequelibre.services.OfertaService.CreateOfertaRequest;
 import com.grupo3.truequelibre.services.OfertaService.FiltrarOfertaRequest;
+import com.grupo3.truequelibre.services.OfertaService.UpdateComentarioRequest;
 import com.grupo3.truequelibre.services.OfertaService.UpdateFinalizarRequest;
 import com.grupo3.truequelibre.services.OfertaService.UpdateOfertaRequest;
+import com.grupo3.truequelibre.viewmodels.UpdateComentarVM;
 import com.grupo3.truequelibre.viewmodels.UpdateFinalizarVM;
 import com.grupo3.truequelibre.viewmodels.UpdateOfertaVM;
 
@@ -49,6 +51,10 @@ public class OfertaController extends ControllerBase {
 	public ResponseEntity<?> GetBy(@PathVariable Integer id_oferta){return Result(service.GetByIdEstadoOferta(id_oferta));}
 	
 	@PutMapping("/estado/{id}")
-	public ResponseEntity<?> Update(@PathVariable Integer id,@RequestBody UpdateFinalizarVM request){return Result(service.updateFinalizarTrueque(
-			new UpdateFinalizarRequest(id, request.usuario_principal_acepto(),request.usuario_ofertante_acepto())));}
+	public ResponseEntity<?> Update(@PathVariable Integer id,@RequestBody UpdateFinalizarVM request){
+		return Result(service.updateFinalizarTrueque(new UpdateFinalizarRequest(id, request.usuario_principal_acepto(),request.usuario_ofertante_acepto())));}
+	
+	@PutMapping("/comentario/{id}")
+	public ResponseEntity<?> UpdateCalifico(@PathVariable Integer id,@RequestBody UpdateComentarVM request){
+		return Result(service.updateComentarioTrueque(new UpdateComentarioRequest(id, request.usuario_principal_califico(),request.usuario_ofertante_califico())));}
 }

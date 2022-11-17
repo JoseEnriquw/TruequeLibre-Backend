@@ -12,6 +12,8 @@ public record OfertaResponse(
 		Integer id_usuario_ofertante,
 		boolean usuario_principal_acepto, 
 		boolean usuario_ofertante_acepto,
+		boolean usuario_principal_califico, 
+		boolean usuario_ofertante_califico,		
 		Integer id
 		) {
 	

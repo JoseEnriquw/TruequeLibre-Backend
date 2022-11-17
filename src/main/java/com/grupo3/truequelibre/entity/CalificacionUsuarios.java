@@ -37,7 +37,7 @@ public class CalificacionUsuarios {
 	public CalificacionUsuarios() {
 	}
 
-	public CalificacionUsuarios(Integer id, short estrellas, String comentario, Date fecha, Usuario usuario) {
+	public CalificacionUsuarios(Integer id, float estrellas, String comentario, Date fecha, Usuario usuario) {
 		this.id = id;
 		this.estrellas = estrellas;
 		this.comentario = comentario;
@@ -45,7 +45,7 @@ public class CalificacionUsuarios {
 		this.usuario = usuario;
 	}
 	
-	public CalificacionUsuarios(short estrellas, String comentario, Date fecha, Usuario usuario, Usuario usuarioCalificador) {
+	public CalificacionUsuarios(float estrellas, String comentario, Date fecha, Usuario usuario, Usuario usuarioCalificador) {
 		this.estrellas = estrellas;
 		this.comentario = comentario;
 		this.fecha = fecha;
