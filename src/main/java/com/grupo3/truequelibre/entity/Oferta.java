@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name="oferta")
 public class Oferta {
 	
-	@Column(columnDefinition = "int IDENTITY(1,1) NOT NULL")
+	@Column(columnDefinition = "int IDENTITY(1,1) NOT NULL",updatable= false)
 	private Integer id;
 	
 	@EmbeddedId
