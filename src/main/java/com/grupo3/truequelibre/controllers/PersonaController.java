@@ -25,7 +25,7 @@ public class PersonaController extends ControllerBase{
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> Update(@PathVariable Integer id,@RequestBody UpdatePersonaVM oferta)
-	{return Result(service.updateImg(new UpdatePersonaRequest(id,oferta.imagenes())));}
+	{return Result(service.updateImg(new UpdatePersonaRequest(id,oferta.imagen())));}
 
 
 }

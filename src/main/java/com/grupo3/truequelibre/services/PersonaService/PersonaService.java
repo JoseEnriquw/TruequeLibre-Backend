@@ -63,11 +63,11 @@ public class PersonaService implements IPersonaServices{
 	
 	@Override
 	public Response<?> updateImg(UpdatePersonaRequest request) {
-		Optional<Persona>pers=personaDao.findById(request.idusuario());
+		Optional<Persona>pers=personaDao.findById(request.id());
 		
 		 Response<Persona> response= new Response<>();
 		if(pers.isEmpty()) {
-			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,request.idusuario(),"Oferta"));		  
+			response.AddError("#1", "id", String.format(ErrorMessage.NOTFOUND,request.id(),"Persona"));		  
 			response.setStatus(HttpStatus.NOT_FOUND);
 		}
 			else {
