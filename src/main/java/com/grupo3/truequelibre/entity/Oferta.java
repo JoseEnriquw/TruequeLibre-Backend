@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name="oferta")
 public class Oferta {
 	
-	@Column(columnDefinition = "int IDENTITY(1,1) NOT NULL",updatable= false)
+	@Column(columnDefinition = "int IDENTITY(1,1) NOT NULL",updatable= false,insertable=false)
 	private Integer id;
 	
 	@EmbeddedId
@@ -73,10 +73,9 @@ public class Oferta {
 
 
 
-	public Oferta(Integer idOferta, PublicacionesOfertasID id, Publicacion publicacionPrincipal,
+	public Oferta(PublicacionesOfertasID id, Publicacion publicacionPrincipal,
 			Publicacion publicacionOferante, Estado estado) {
-		super();
-		this.id = idOferta;
+
 		this.idPublicacionesOfertas = id;
 		this.publicacionPrincipal = publicacionPrincipal;
 		this.publicacionOferante = publicacionOferante;
@@ -85,11 +84,10 @@ public class Oferta {
 	
 	
 	
-	public Oferta(Integer id, PublicacionesOfertasID idPublicacionesOfertas, Publicacion publicacionPrincipal,
+	public Oferta( PublicacionesOfertasID idPublicacionesOfertas, Publicacion publicacionPrincipal,
 			Publicacion publicacionOferante, Estado estado, boolean usuario_principal_acepto,
 			boolean usuario_ofertante_acepto, boolean usuario_principal_califico, boolean usuario_ofertante_califico) {
-		super();
-		this.id = id;
+
 		this.idPublicacionesOfertas = idPublicacionesOfertas;
 		this.publicacionPrincipal = publicacionPrincipal;
 		this.publicacionOferante = publicacionOferante;
@@ -103,7 +101,7 @@ public class Oferta {
 
 
 	public Oferta(PublicacionesOfertasID idPublicacionesOfertas, Estado estado) {
-		super();
+       
 		this.idPublicacionesOfertas = idPublicacionesOfertas;
 		this.estado = estado;
 	}

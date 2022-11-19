@@ -82,7 +82,8 @@ public class OfertaServices implements IOfertaServices {
 				response.setStatus(HttpStatus.NOT_FOUND);
 			}
 			else {
-				Oferta oferta=new Oferta(new PublicacionesOfertasID(request.id_publicacion_principal(),request.id_publicacion_ofertante()),new Estado(3,"Ofertado"));
+				Oferta oferta=new Oferta(new PublicacionesOfertasID(request.id_publicacion_principal(),
+						request.id_publicacion_ofertante()),new Estado(3,"Ofertado"));
 				oferta.setPublicacionPrincipal(publicacionPrincipal.get());
 				oferta.setPublicacionOferante(publicacionOfertante.get());
 				ofertaDao.save(oferta);
